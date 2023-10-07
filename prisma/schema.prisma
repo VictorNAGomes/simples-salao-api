@@ -6,3 +6,99 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model Client {
+  id           Int            @id @default(autoincrement())
+  name         String
+  number       String
+  email        String         @unique
+  solicitation Solicitation[]
+}
+
+model Solicitation {
+  id                   Int                    @id @default(autoincrement())
+  data                 DateTime
+  client_id            Int
+  client               Client                 @relation(fields: [client_id], references: [id])
+  Appointment          Appointment[]
+  Service_solicitation Service_solicitation[]
+}
+
+model Appointment {
+  id              Int          @id @default(autoincrement())
+  solicitation_Id Int
+  solicitation    Solicitation @relation(fields: [solicitation_Id], references: [id])
+}
+
+model Employee {
+  id             Int      @id @default(autoincrement())
+  name           String
+  cpf            String   @unique
+  ctps           Int      @unique
+  phone          Int
+  salary         Decimal
+  admission_date DateTime
+
+  position_id Int
+  position    Position @relation(fields: [position_id], references: [id])
+}
+
+model Position {
+  id          Int        @id @default(autoincrement())
+  name        String
+  description String
+  employee    Employee[]
+}
+
+model Company {
+  id                  Int                   @id @default(autoincrement())
+  cnpj                String                @unique
+  Name                String
+  criation_date       DateTime
+  Company_preferences Company_preferences[]
+  Company_service     Company_service[]
+}
+
+model Company_preferences {
+  id             Int    @id @default(autoincrement())
+  company_id     Int
+  preferences_id Int
+  valor          String
+
+  company     Company     @relation(fields: [company_id], references: [id])
+  preferences Preferences @relation(fields: [preferences_id], references: [id])
+}
+
+model Preferences {
+  id                  Int                   @id @default(autoincrement())
+  desc                String
+  Company_preferences Company_preferences[]
+}
+
+model Service {
+  id                   Int                    @id @default(autoincrement())
+  name                 String
+  desc                 String
+  valor                String
+  Company_service      Company_service[]
+  Service_solicitation Service_solicitation[]
+}
+
+model Company_service {
+  id         Int @id @default(autoincrement())
+  company_id Int
+  service_id Int
+
+  company Company @relation(fields: [company_id], references: [id])
+  service Service @relation(fields: [service_id], references: [id])
+}
+
+model Service_solicitation {
+  id              Int @id @default(autoincrement())
+  solicitation_id Int
+  service_id      Int
+  ammount         Int
+
+  solicitation Solicitation @relation(fields: [service_id], references: [id])
+  service      Service      @relation(fields: [service_id], references: [id])
+}
