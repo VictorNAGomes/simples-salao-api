@@ -1,5 +1,5 @@
 import express, { json } from "express";
-import { Environment } from "../shared.kernel/environment";
+import { Environment } from "../_shared.kernel/environment";
 
 import swaggerUi from "swagger-ui-express";
 import { Swagger } from "./swagger";
