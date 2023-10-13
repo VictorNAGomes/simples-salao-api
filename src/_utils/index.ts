@@ -1,1 +1,1 @@
-export * from "./interfaces/Service";
+export * from "./interfaces/Service.interface";
