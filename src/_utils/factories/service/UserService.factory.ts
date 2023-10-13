@@ -2,7 +2,7 @@ import { LoginService } from "../../../userManagement/domain/service/User/Login.
 import { UserRepositoryFactory } from "../repository/UserRepository.factory";
 
 export class UserServiceFactory {
-  createUserService() {
+  static createUserService() {
     const userRepository = UserRepositoryFactory.createUserRepository();
     return new LoginService(userRepository);
   }

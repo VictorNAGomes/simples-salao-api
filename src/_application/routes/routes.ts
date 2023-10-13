@@ -1,14 +1,8 @@
-import { Router as ExpressRouter } from 'express'
-import { clientRoutes } from './client.routes'
+import { Router as ExpressRouter } from "express";
+import { userRoutes } from "./user.routes";
 
-export const Router = (): ExpressRouter => {
-    const router = ExpressRouter()
+export const setupRoutes = (router: ExpressRouter) => {
+  userRoutes(router);
 
-    router.get('/', (request, response) => {
-        response.json({ message: "Olá mundo" })
-    })
-
-    router.use(clientRoutes(router))
-
-    return router
-}
+  return router;
+};

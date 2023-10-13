@@ -1,6 +1,6 @@
-import Server from "./_application/server"
-import { Router } from "./_application/routes/routes"
+import Server from "./_application/server";
+import { Router } from "express";
 
-const server = new Server(Router())
+const server = new Server(Router());
 
-server.start()
+server.start();

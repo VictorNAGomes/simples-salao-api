@@ -1,5 +1,4 @@
-import { PrismaClient } from "@prisma/client";
-import { Service } from "@utils";
+import { Service } from "@interfaces";
 import { UserRepository } from "../../../infra/repository/User.repository";
 
 export class LoginService implements Service {

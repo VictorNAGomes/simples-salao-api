@@ -1,9 +1,10 @@
-import express, { json } from "express";
+import express, { Router, json } from "express";
 import { Environment } from "../_utils/environment";
 
 import swaggerUi from "swagger-ui-express";
 import { Swagger } from "./swagger";
 import swaggerJSDoc from "swagger-jsdoc";
+import { setupRoutes } from "./routes/routes";
 
 export default class Server {
   private readonly express: express.Application;
@@ -13,19 +14,16 @@ export default class Server {
   constructor(routes: express.Router) {
     this.express = express();
     this.routes = routes;
-    this.express.use(
-      "/docs",
-      swaggerUi.serve,
-      swaggerUi.setup(
-        Swagger.spec
-      )
-    );
+    this.express.use("/docs", swaggerUi.serve, swaggerUi.setup(Swagger.spec));
 
     this.express.use(json());
     this.express.use(this.routes);
   }
 
   public start = () => {
+    const router = Router();
+    this.express.use(setupRoutes(router));
+
     this.express.listen(this.port, () => {
       console.log(`Servidor rodando na porta ${Environment.port} 🏆`);
     });

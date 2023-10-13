@@ -10,7 +10,6 @@ export class UserRepository implements UserRepositoryProtocol {
   }
 
   findByEmail(email: string): Promise<UserDomain> {
-    return this.prisma
     throw new Error("Method not implemented.");
   }
 
