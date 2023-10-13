@@ -3,8 +3,15 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
-  url      = env("DATABASE_URL")
+  provider = "postgresql"
+  url      = env("DATABASE_CONNECTOR")
+}
+
+model User {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
 }
 
 model Client {
@@ -21,7 +28,7 @@ model Solicitation {
   client_id            Int
   client               Client                 @relation(fields: [client_id], references: [id])
   Appointment          Appointment[]
-  Service_solicitation Service_solicitation[]
+  // Service_solicitation Service_solicitation[]
 }
 
 model Appointment {
@@ -81,7 +88,7 @@ model Service {
   desc                 String
   valor                String
   Company_service      Company_service[]
-  Service_solicitation Service_solicitation[]
+  // Service_solicitation Service_solicitation[]
 }
 
 model Company_service {
@@ -93,12 +100,12 @@ model Company_service {
   service Service @relation(fields: [service_id], references: [id])
 }
 
-model Service_solicitation {
-  id              Int @id @default(autoincrement())
-  solicitation_id Int
-  service_id      Int
-  ammount         Int
+// model Service_solicitation {
+//   id              Int @id @default(autoincrement())
+//   solicitation_id Int
+//   service_id      Int
+//   ammount         Int
 
-  solicitation Solicitation @relation(fields: [service_id], references: [id])
-  service      Service      @relation(fields: [service_id], references: [id])
-}
+//   solicitation Solicitation @relation(fields: [service_id], references: [id])
+//   service      Service      @relation(fields: [service_id], references: [id])
+// }

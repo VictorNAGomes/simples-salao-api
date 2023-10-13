@@ -1,8 +1,26 @@
 version: '3'
 
 services:
-  docker-node-ts:
-    build: .
+  # docker-node-ts:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "3000:3000"
+  #   command: npm start
+  #   volumes:
+  #     - .:/usr/app
+  #     - /usr/app/node_modules
+  postgres:
+    image: postgres:14-alpine
+    container_name: postgres-simples-salao
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: simples_salao
+    volumes:
+      - pg_data:/var/lib/postgresql/data
     ports:
-      - "3000:3000"
-    command: npm start
+      - "5432:5432"
+volumes:
+  pg_data:
