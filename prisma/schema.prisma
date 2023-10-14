@@ -8,10 +8,11 @@ datasource db {
 }
 
 model User {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
+  id           String         @id @default(uuid())
+  name         String
+  email        String         @unique
+  password     String
+  Professional Professional[]
 }
 
 model Client {
@@ -22,12 +23,20 @@ model Client {
   solicitation Solicitation[]
 }
 
+model Professional {
+  id         String  @id @default(uuid())
+  id_user    String
+  id_company String
+  company    Company @relation(fields: [id_company], references: [id])
+  user       User    @relation(fields: [id_user], references: [id])
+}
+
 model Solicitation {
-  id                   Int                    @id @default(autoincrement())
-  data                 DateTime
-  client_id            Int
-  client               Client                 @relation(fields: [client_id], references: [id])
-  Appointment          Appointment[]
+  id          Int           @id @default(autoincrement())
+  data        DateTime
+  client_id   Int
+  client      Client        @relation(fields: [client_id], references: [id])
+  Appointment Appointment[]
   // Service_solicitation Service_solicitation[]
 }
 
@@ -58,21 +67,22 @@ model Position {
 }
 
 model Company {
-  id                  Int                   @id @default(autoincrement())
+  id                  String                @id @default(uuid())
   cnpj                String                @unique
   Name                String
   criation_date       DateTime
   Company_preferences Company_preferences[]
   Company_service     Company_service[]
+  Professionals       Professional[]
 }
 
 model Company_preferences {
   id             Int    @id @default(autoincrement())
-  company_id     Int
+  id_company     String
   preferences_id Int
   valor          String
 
-  company     Company     @relation(fields: [company_id], references: [id])
+  company     Company     @relation(fields: [id_company], references: [id])
   preferences Preferences @relation(fields: [preferences_id], references: [id])
 }
 
@@ -83,21 +93,21 @@ model Preferences {
 }
 
 model Service {
-  id                   Int                    @id @default(autoincrement())
-  name                 String
-  desc                 String
-  valor                String
-  Company_service      Company_service[]
+  id              String            @id @default(uuid())
+  name            String
+  desc            String
+  valor           String
+  Company_service Company_service[]
   // Service_solicitation Service_solicitation[]
 }
 
 model Company_service {
-  id         Int @id @default(autoincrement())
-  company_id Int
-  service_id Int
+  id         Int    @id @default(autoincrement())
+  id_company String
+  id_service String
 
-  company Company @relation(fields: [company_id], references: [id])
-  service Service @relation(fields: [service_id], references: [id])
+  company Company @relation(fields: [id_company], references: [id])
+  service Service @relation(fields: [id_service], references: [id])
 }
 
 // model Service_solicitation {
