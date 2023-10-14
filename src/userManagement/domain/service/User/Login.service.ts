@@ -19,12 +19,11 @@ export class LoginService implements Service {
         throw new Error("Email ou senha incorretos");
       }
 
-      jwt.sign({ result }, "lol", { expiresIn: "1h" }, (err, token) => {
-        if (err) {
-          throw new Error("Não foi possível fazer login");
-        }
-        return token;
-      });
+      const token = jwt.sign({ result }, "lol", { expiresIn: "1h" });
+      if(!token) {
+        throw new Error("Erro interno");
+      }
+      return token
     } catch (error: any) {
       throw new Error(error);
     }
