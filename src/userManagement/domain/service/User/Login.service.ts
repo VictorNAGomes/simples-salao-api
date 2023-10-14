@@ -8,6 +8,11 @@ export class LoginService implements Service {
     this.userRepository = userRepository;
   }
   async execute(email: string, password: string) {
-    return this.userRepository.findByEmail(email);
+    try {
+      const result = await this.userRepository.findByEmail(email);
+      return result;
+    } catch (error: any) {
+      throw new Error(error);
+    }
   }
 }

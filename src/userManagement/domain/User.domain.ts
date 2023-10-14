@@ -1,10 +1,10 @@
 export class UserDomain {
-  idUser!: string;
+  id!: string;
   email!: string;
   password!: string;
 
-  constructor(data: { idUser: string; email: string; password: string }) {
-    this.idUser = data.idUser;
+  constructor(data: { id: string; email: string; password: string }) {
+    this.id = data.id;
     this.email = data.email;
     this.password = data.password;
   }

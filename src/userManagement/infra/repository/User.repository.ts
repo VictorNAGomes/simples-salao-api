@@ -9,8 +9,20 @@ export class UserRepository implements UserRepositoryProtocol {
     this.prisma = prisma;
   }
 
-  findByEmail(email: string): Promise<UserDomain> {
-    throw new Error("Method not implemented.");
+  public async findByEmail(email: string): Promise<UserDomain> {
+    const result = await this.prisma.user.findUnique({
+      where: {
+        email,
+      },
+    });
+
+    if (!result) throw new Error("User not found");
+
+    return new UserDomain({
+      email: result.email,
+      password: result.password,
+      id: result.id,
+    });
   }
 
   save(user: UserDomain): Promise<void> {
