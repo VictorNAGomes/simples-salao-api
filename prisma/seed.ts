@@ -7,7 +7,9 @@ async function main() {
     data: {
       email: "john@email.com",
       name: "John Doe",
-      password: "123456",
+      password: "12345678",
     },
   });
 }
+
+main().then()
