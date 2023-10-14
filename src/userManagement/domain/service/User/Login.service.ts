@@ -12,7 +12,7 @@ export class LoginService implements Service {
       const result = await this.userRepository.findByEmail(email);
 
       if (!result) {
-        throw new Error("Email ou senha inexistentes");
+        throw new Error("Email ou senha incorretos");
       }
 
       if (password !== result.password) {
