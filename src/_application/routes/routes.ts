@@ -1,8 +1,10 @@
 import { Router as ExpressRouter } from "express";
-import { userRoutes } from "./user.routes";
+import { UserManagementRoutes } from "./userManagement";
 
 export const setupRoutes = (router: ExpressRouter) => {
-  userRoutes(router);
+  UserManagementRoutes.professional(router)
+  UserManagementRoutes.client(router)
+  UserManagementRoutes.user(router)
 
   return router;
 };
