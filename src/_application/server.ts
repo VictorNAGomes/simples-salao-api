@@ -1,5 +1,6 @@
 import express, { Router, json } from "express";
 import { Environment } from "../_utils/environment";
+import cors from "cors";
 
 import swaggerUi from "swagger-ui-express";
 import { Swagger } from "./swagger";
@@ -16,6 +17,7 @@ export default class Server {
     this.routes = routes;
     this.express.use("/docs", swaggerUi.serve, swaggerUi.setup(Swagger.spec));
 
+    this.express.use(cors());
     this.express.use(json());
     this.express.use(this.routes);
   }
