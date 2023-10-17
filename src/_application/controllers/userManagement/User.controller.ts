@@ -11,8 +11,8 @@ export class UserController {
       if (error) {
         throw new Error(error.message);
       }
-      const jwt = await loginService.execute(req.body.email, req.body.password);
-      res.json({ jwt });
+      const result = await loginService.execute(req.body.email, req.body.password);
+      res.json(result);
     } catch (error: any) {
       res.status(400).json({ message: error.message });
     }

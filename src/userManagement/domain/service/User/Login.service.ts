@@ -26,13 +26,15 @@ export class LoginService implements Service {
         throw new Error("Email ou senha incorretos");
       }
 
-      const token = jwt.sign({ result }, Environment.jwt_secret, { expiresIn: "1h" });
+      const token = jwt.sign({ result }, Environment.getJwtSecret(), {
+        expiresIn: "1h",
+      });
       if (!token) {
         logger.error("Erro ao gerar token jwt");
         throw new Error("Erro interno");
       }
 
-      return token;
+      return { token, message: "Login realizado com sucesso!" };
     } catch (error: any) {
       throw new Error(error);
     }
