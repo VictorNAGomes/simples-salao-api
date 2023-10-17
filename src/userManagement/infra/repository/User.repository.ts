@@ -21,7 +21,8 @@ export class UserRepository implements UserRepositoryProtocol {
     return new UserDomain({
       email: result.email,
       password: result.password,
-      id: result.id,
+      idUser: result.idUser,
+      name: result.name,
     });
   }
 

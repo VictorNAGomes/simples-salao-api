@@ -8,15 +8,15 @@ datasource db {
 }
 
 model User {
-  id           String         @id @default(uuid())
+  idUser       String       @id @default(uuid())
   name         String
-  email        String         @unique
+  email        String       @unique
   password     String
-  Professional Professional[]
+  Professional Professional?
 }
 
 model Client {
-  id           Int            @id @default(autoincrement())
+  idClient     String         @id @default(uuid())
   name         String
   number       String
   email        String         @unique
@@ -24,98 +24,98 @@ model Client {
 }
 
 model Professional {
-  id         String  @id @default(uuid())
-  id_user    String
-  id_company String
-  company    Company @relation(fields: [id_company], references: [id])
-  user       User    @relation(fields: [id_user], references: [id])
+  idProfessional String  @id @default(uuid())
+  idUser         String  @unique
+  idCompany      String
+  company        Company @relation(fields: [idCompany], references: [idCompany])
+  user           User    @relation(fields: [idUser], references: [idUser])
 }
 
 model Solicitation {
-  id          Int           @id @default(autoincrement())
-  data        DateTime
-  client_id   Int
-  client      Client        @relation(fields: [client_id], references: [id])
-  Appointment Appointment[]
-  // Service_solicitation Service_solicitation[]
+  idSolicitation      String                @id @default(uuid())
+  data                DateTime
+  idClient            String
+  client              Client                @relation(fields: [idClient], references: [idClient])
+  Appointment         Appointment[]
+  ServiceSolicitation ServiceSolicitation[]
 }
 
 model Appointment {
-  id              Int          @id @default(autoincrement())
-  solicitation_Id Int
-  solicitation    Solicitation @relation(fields: [solicitation_Id], references: [id])
+  idAppointment  String       @id @default(uuid())
+  idSolicitation String
+  solicitation   Solicitation @relation(fields: [idSolicitation], references: [idSolicitation])
 }
 
 model Employee {
-  id             Int      @id @default(autoincrement())
-  name           String
-  cpf            String   @unique
-  ctps           Int      @unique
-  phone          Int
-  salary         Decimal
-  admission_date DateTime
+  idEmployee    String   @id @default(uuid())
+  name          String
+  cpf           String   @unique
+  ctps          Int      @unique
+  phone         Int
+  salary        Decimal
+  admissionDate DateTime
 
-  position_id Int
-  position    Position @relation(fields: [position_id], references: [id])
+  idPosition String
+  position   Position @relation(fields: [idPosition], references: [idPosition])
 }
 
 model Position {
-  id          Int        @id @default(autoincrement())
+  idPosition  String     @id @default(uuid())
   name        String
   description String
   employee    Employee[]
 }
 
 model Company {
-  id                  String                @id @default(uuid())
-  cnpj                String                @unique
-  Name                String
-  criation_date       DateTime
-  Company_preferences Company_preferences[]
-  Company_service     Company_service[]
-  Professionals       Professional[]
+  idCompany          String               @id @default(uuid())
+  cnpj               String               @unique
+  name               String
+  criationDate       DateTime
+  CompanyPreferences CompanyPreferences[]
+  CompanyService     CompanyService[]
+  Professionals      Professional[]
 }
 
-model Company_preferences {
-  id             Int    @id @default(autoincrement())
-  id_company     String
-  preferences_id Int
-  valor          String
+model CompanyPreferences {
+  idCompanyPreferences String @id @default(uuid())
+  idCompany            String
+  idPreferences        String
+  valor                String
 
-  company     Company     @relation(fields: [id_company], references: [id])
-  preferences Preferences @relation(fields: [preferences_id], references: [id])
+  company     Company     @relation(fields: [idCompany], references: [idCompany])
+  preferences Preferences @relation(fields: [idPreferences], references: [idPreferences])
 }
 
 model Preferences {
-  id                  Int                   @id @default(autoincrement())
-  desc                String
-  Company_preferences Company_preferences[]
+  idPreferences      String               @id @default(uuid())
+  desc               String
+  CompanyPreferences CompanyPreferences[]
 }
 
 model Service {
-  id              String            @id @default(uuid())
-  name            String
-  desc            String
-  valor           String
-  Company_service Company_service[]
-  // Service_solicitation Service_solicitation[]
+  idService           String                @id @default(uuid())
+  name                String
+  desc                String
+  valor               String
+  CompanyService      CompanyService[]
+  ServiceSolicitation ServiceSolicitation[]
 }
 
-model Company_service {
-  id         Int    @id @default(autoincrement())
-  id_company String
-  id_service String
+model CompanyService {
+  idCompanyService String @id @default(uuid())
+  idCompany        String
+  idService        String
 
-  company Company @relation(fields: [id_company], references: [id])
-  service Service @relation(fields: [id_service], references: [id])
+  company Company @relation(fields: [idCompany], references: [idCompany])
+  service Service @relation(fields: [idService], references: [idService])
 }
 
-// model Service_solicitation {
-//   id              Int @id @default(autoincrement())
-//   solicitation_id Int
-//   service_id      Int
-//   ammount         Int
+model ServiceSolicitation {
+  idServiceSolicitation String @id @default(uuid())
+  idSolicitation        String
+  idService             String
+  ammount               Int
 
-//   solicitation Solicitation @relation(fields: [service_id], references: [id])
-//   service      Service      @relation(fields: [service_id], references: [id])
-// }
+  solicitation Solicitation @relation(fields: [idSolicitation], references: [idSolicitation])
+  service      Service      @relation(fields: [idService], references: [idService])
+}

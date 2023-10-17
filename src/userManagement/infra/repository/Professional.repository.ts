@@ -9,7 +9,13 @@ export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
   //   this.prisma = prisma;
   // }
 
-  public create(professional: ProfessionalDomain) {
-    return new ProfessionalDomain(professional);
+  public create(
+    professional: Omit<ProfessionalDomain, "idUser" | "idProfessional">
+  ) {
+    return new ProfessionalDomain({
+      ...professional,
+      idProfessional: "a",
+      idUser: " a",
+    });
   }
 }
