@@ -70,7 +70,7 @@ model Company {
   idCompany          String               @id @default(uuid())
   cnpj               String               @unique
   name               String
-  criationDate       DateTime
+  creationDate       DateTime
   CompanyPreferences CompanyPreferences[]
   CompanyService     CompanyService[]
   Professionals      Professional[]

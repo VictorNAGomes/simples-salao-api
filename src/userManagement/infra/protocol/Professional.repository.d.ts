@@ -1,5 +1,10 @@
 import { ProfessionalDomain } from "src/userManagement/domain";
+import { CompanyDomain } from "src/userManagement/domain/Company.domain";
 
 export interface ProfessionalRepositoryProtocol {
-  create(professional: ProfessionalDomain): ProfessionalDomain;
+  create(data: {
+    professionalData: Omit<ProfessionalDomain, "idUser" | "idProfessional">;
+    companyData: Omit<CompanyDomain, "idCompany">;
+  }): Promise<{ company: CompanyDomain; professional: ProfessionalDomain }>;
+  get(filter: Partial<ProfessionalDomain>): Promise<ProfessionalDomain[]>
 }

@@ -5,18 +5,21 @@ import { ProfessionalServiceFactory } from "src/_utils/factories/service/Profess
 export class ProfessionalController {
   async create(req: Request, res: Response) {
     try {
-      const createProfessionalService =
-        ProfessionalServiceFactory.createCreateProfessionalService();
-
       const validator = new CreateProfessionalValidator();
       const { error } = validator.validate(req.body);
       if (error) {
         throw new Error(error.message);
       }
 
-      validator.validate(req.body);
+      const createProfessionalService =
+        ProfessionalServiceFactory.createCreateProfessionalService();
 
-      createProfessionalService.execute(req.body);
+      const result = await createProfessionalService.execute(req.body);
+
+      res.status(201).json({
+        message: "Conta pessoal e conta de empresa criadas com sucesso",
+        result,
+      });
     } catch (error: any) {
       res.status(400).json({ message: error.message });
     }

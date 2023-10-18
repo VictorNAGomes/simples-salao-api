@@ -2,7 +2,7 @@ import { Service } from "@interfaces";
 import { UserRepository } from "../../../infra/repository/User.repository";
 import jwt from "jsonwebtoken";
 import { logger } from "src/_utils/logger";
-import { Environment } from "@utils";
+import { Environment } from "@utils/index";
 export class LoginService implements Service {
   private userRepository: UserRepository;
 

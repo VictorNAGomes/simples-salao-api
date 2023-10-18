@@ -1,6 +1,6 @@
 import Server from "./_application/server";
 import { Router } from "express";
-import { Environment, logger } from "@utils";
+import { Environment, logger } from "@utils/index";
 import winston from "winston";
 
 if (Environment.node_env !== 'production') {

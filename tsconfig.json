@@ -34,7 +34,7 @@
       "@interfaces": ["./src/_utils/interfaces"],
       "@singletons": ["./src/_utils/singletons"],
       "@validators": ["./src/_application/validators"],
-      "@utils": ["./src/_utils"],
+      "@utils/*": ["./src/_utils/*"],
     },                                      /* Specify a set of entries that re-map imports to additional lookup locations. */
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
