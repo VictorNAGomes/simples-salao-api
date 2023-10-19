@@ -15,4 +15,5 @@ export interface ProfessionalRepositoryProtocol {
       "idProfessional" | "idUser" | "password" | "email"
     >
   ): Promise<{ idProfessional: string } | null>;
+  delete(idProfessional: string): Promise<{ idProfessional: string } | null>;
 }

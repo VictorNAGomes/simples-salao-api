@@ -1,4 +1,3 @@
-import { UserServiceFactory } from "../../../../_utils/factories";
 import { UserDomain } from "../../User.domain";
 import { LoginService } from "./Login.service";
 
@@ -23,7 +22,7 @@ describe("LoginService", () => {
     it("Deve retornar erro", async () => {
       try {
         mockUserRepository.findByEmail.mockReturnValueOnce(
-          new UserDomain({ email: "aaa", password: "123", id: "asd" })
+          new UserDomain({ email: "aaa", password: "123", idUser: "asd" })
         );
 
         const loginService = new LoginService(mockUserRepository as any);

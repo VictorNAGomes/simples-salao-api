@@ -1,5 +1,6 @@
 import { CustomError } from "src/_application/CustomError";
 import winston from "winston";
+import { logger } from "./logger";
 
 export class ErrorHandler {
   static throwWithoutLog(error: CustomError) {
@@ -7,7 +8,7 @@ export class ErrorHandler {
   }
 
   static throwWithLog(error: CustomError) {
-    winston.log("error", error.message, error);
+    logger.error(error.message, error, "error");
     throw error;
   }
 }

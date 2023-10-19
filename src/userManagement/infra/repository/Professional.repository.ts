@@ -154,13 +154,12 @@ export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
       user: {
         update: {
           name: professionalData.name,
-        }
+        },
       },
     };
     const dbResult = await this.prisma.professional.update({
       where: {
         idProfessional,
-        
       },
       data: professional,
     });
@@ -174,5 +173,15 @@ export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
     };
 
     return updatedProfessional;
+  }
+
+  delete(idProfessional: string): Promise<{ idProfessional: string } | null> {
+    const dbResult = this.prisma.professional.delete({
+      where: {
+        idProfessional,
+      },
+    });
+
+    return dbResult;
   }
 }

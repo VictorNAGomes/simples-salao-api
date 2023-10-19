@@ -1,8 +1,10 @@
 import { Service } from "@interfaces";
-import { UserRepository } from "../../../infra/repository/User.repository";
-import jwt from "jsonwebtoken";
-import { logger } from "src/_utils/logger";
-import { Environment } from "@utils/index";
+import { ErrorHandler } from "@utils/ErrorHandler";
+import { Environment } from "@utils/environment";
+import { CustomError } from "src/_application/CustomError";
+import { UserRepository } from "src/userManagement/infra/repository/User.repository";
+import jwt from 'jsonwebtoken'
+
 export class LoginService implements Service {
   private userRepository: UserRepository;
 
@@ -14,24 +16,22 @@ export class LoginService implements Service {
       const result = await this.userRepository.findByEmail(email);
 
       if (!result) {
-        logger.log({
-          level: "error",
-          message: "Email ou senha incorretos",
-        });
-        throw new Error("Email ou senha incorretos");
+        ErrorHandler.throwWithLog(
+          new CustomError("Email ou senha incorretos", 400)
+        );
       }
 
       if (password !== result.password) {
-        logger.error("Email ou senha incorretos");
-        throw new Error("Email ou senha incorretos");
+        ErrorHandler.throwWithLog(
+          new CustomError("Email ou senha incorretos", 400)
+        );
       }
 
       const token = jwt.sign({ result }, Environment.getJwtSecret(), {
         expiresIn: "1h",
       });
       if (!token) {
-        logger.error("Erro ao gerar token jwt");
-        throw new Error("Erro interno");
+        ErrorHandler.throwWithLog(new CustomError("Erro ao autenticar", 500));
       }
 
       return { token, message: "Login realizado com sucesso!" };
