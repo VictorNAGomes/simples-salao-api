@@ -117,7 +117,9 @@ export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
     return professionals;
   }
 
-  public async getOne(idProfessional: string): Promise<ProfessionalDomain | null> {
+  public async getOne(
+    idProfessional: string
+  ): Promise<ProfessionalDomain | null> {
     const dbResult = await this.prisma.professional.findUnique({
       where: {
         idProfessional,
@@ -139,5 +141,38 @@ export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
       password: dbResult.user.password,
       idUser: dbResult.user.idUser,
     });
+  }
+
+  public async update(
+    idProfessional: string,
+    professionalData: Omit<
+      Partial<ProfessionalDomain>,
+      "idProfessional" | "password" | "email"
+    >
+  ) {
+    const professional: Prisma.ProfessionalUpdateInput = {
+      user: {
+        update: {
+          name: professionalData.name,
+        }
+      },
+    };
+    const dbResult = await this.prisma.professional.update({
+      where: {
+        idProfessional,
+        
+      },
+      data: professional,
+    });
+
+    if (!dbResult) {
+      return null;
+    }
+
+    const updatedProfessional = {
+      idProfessional: dbResult.idProfessional,
+    };
+
+    return updatedProfessional;
   }
 }

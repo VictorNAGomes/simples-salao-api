@@ -6,6 +6,13 @@ export interface ProfessionalRepositoryProtocol {
     professionalData: Omit<ProfessionalDomain, "idUser" | "idProfessional">;
     companyData: Omit<CompanyDomain, "idCompany">;
   }): Promise<{ company: CompanyDomain; professional: ProfessionalDomain }>;
-  getAll(filters: { name?: string }): Promise<ProfessionalDomain[]>
-  getOne(idProfessional: string): Promise<ProfessionalDomain | null>
+  getAll(filters: { name?: string }): Promise<ProfessionalDomain[]>;
+  getOne(idProfessional: string): Promise<ProfessionalDomain | null>;
+  update(
+    idProfessional: string,
+    professionalData: Omit<
+      Partial<ProfessionalDomain>,
+      "idProfessional" | "idUser" | "password" | "email"
+    >
+  ): Promise<{ idProfessional: string } | null>;
 }

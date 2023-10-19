@@ -96,8 +96,47 @@ export const professionalRoutes = (router: ExpressRouter) => {
    *       500:
    *         description: Internal server error.
    */
-
   router.get("/professional/:idProfessional", professionalController.getOne);
+
+  /**
+   * @swagger
+   * /professional/{idProfessional}:
+   *   patch:
+   *     summary: Update a professional by ID
+   *     description: Updates a single professional by ID.
+   *     tags:
+   *       - Profissional
+   *     parameters:
+   *       - in: path
+   *         name: idProfessional
+   *         schema:
+   *           type: string
+   *         required: true
+   *         description: The ID of the professional to update.
+   *     requestBody:
+   *       required: true
+   *       description: Fields for the Professional resource
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *     responses:
+   *       200:
+   *         description: The updated professional.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: object
+   *               properties:
+   *                 result:
+   *                   idProfessional:
+   *                     type: string
+   *       404:
+   *         description: Professional not found.
+   *       500:
+   *         description: Internal server error.
+   */
+  router.patch("/professional/:idProfessional", professionalController.update);
 
   return router;
 };
