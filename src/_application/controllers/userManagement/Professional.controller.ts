@@ -2,8 +2,10 @@ import { Request, Response } from "express";
 import { CustomError } from "src/_application/CustomError";
 import { CreateProfessionalValidator } from "src/_application/validators/userManagement/Professional/CreateProfessional.validator";
 import { GetAllProfessionalsValidator } from "src/_application/validators/userManagement/Professional/GetAllProfessionals.validator";
+import { GetOneProfessionalValidator } from "src/_application/validators/userManagement/Professional/GetOneProfessional.validator";
 import { ProfessionalServiceFactory } from "src/_utils/factories/service/ProfessionalService.factory";
 import { GetAllProfessionalsService } from "src/userManagement/domain/service/Professional/GetAllProfessionals.service";
+import { GetOneProfessionalService } from "src/userManagement/domain/service/Professional/GetOneProfessional.service";
 
 export class ProfessionalController {
   async create(req: Request, res: Response) {
@@ -41,7 +43,24 @@ export class ProfessionalController {
         .status(200)
         .json({ result, message: "Profissionais encontrados com sucesso" });
     } catch (error: any) {
-      
+      res.status(error.statusCode ?? 400).json({ message: error.message });
+    }
+  }
+
+  async getOne(req: Request, res: Response) {
+    try {
+      const getOneProfessionalService = new GetOneProfessionalService();
+      const validator = new GetOneProfessionalValidator();
+      validator.validate(req.params.idProfessional);
+
+      const result = await getOneProfessionalService.execute(
+        req.params.idProfessional
+      );
+
+      res
+        .status(200)
+        .json({ result, message: "Profissional encontrado com sucesso" });
+    } catch (error: any) {
       res.status(error.statusCode ?? 400).json({ message: error.message });
     }
   }

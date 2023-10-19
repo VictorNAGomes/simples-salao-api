@@ -69,5 +69,35 @@ export const professionalRoutes = (router: ExpressRouter) => {
    */
   router.get("/professional", professionalController.getAll);
 
+  /**
+   * @swagger
+   * /professional/{idProfessional}:
+   *   get:
+   *     summary: Get a professional by ID
+   *     description: Returns a single professional by ID.
+   *     tags:
+   *       - Profissional
+   *     parameters:
+   *       - in: path
+   *         name: idProfessional
+   *         schema:
+   *           type: string
+   *         required: true
+   *         description: The ID of the professional to retrieve.
+   *     responses:
+   *       200:
+   *         description: A single professional.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               $ref: '#/components/schemas/Professional'
+   *       404:
+   *         description: Professional not found.
+   *       500:
+   *         description: Internal server error.
+   */
+
+  router.get("/professional/:idProfessional", professionalController.getOne);
+
   return router;
 };

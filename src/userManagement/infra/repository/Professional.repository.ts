@@ -116,4 +116,28 @@ export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
 
     return professionals;
   }
+
+  public async getOne(idProfessional: string): Promise<ProfessionalDomain | null> {
+    const dbResult = await this.prisma.professional.findUnique({
+      where: {
+        idProfessional,
+      },
+      include: {
+        company: true,
+        user: true,
+      },
+    });
+
+    if (!dbResult) {
+      return null;
+    }
+
+    return new ProfessionalDomain({
+      email: dbResult.user.email,
+      idProfessional: dbResult.idProfessional,
+      name: dbResult.user.name,
+      password: dbResult.user.password,
+      idUser: dbResult.user.idUser,
+    });
+  }
 }
