@@ -44,5 +44,30 @@ export const professionalRoutes = (router: ExpressRouter) => {
    */
   router.post("/professional", professionalController.create);
 
+  /**
+   * @swagger
+   * /professional:
+   *   get:
+   *     summary: Get all professionals
+   *     description: Returns a list of all professionals.
+   *     tags:
+   *       - Profissional
+   *     parameters:
+   *       - in: query
+   *         name: name
+   *     responses:
+   *       200:
+   *         description: A list of professionals.
+   *         content:
+   *           application/json:
+   *             schema:
+   *               type: array
+   *               items:
+   *                 $ref: '#/components/schemas/Professional'
+   *       500:
+   *         description: Internal server error.
+   */
+  router.get("/professional", professionalController.getAll);
+
   return router;
 };

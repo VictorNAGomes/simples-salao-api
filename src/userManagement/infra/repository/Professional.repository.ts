@@ -87,4 +87,33 @@ export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
 
     return professionals;
   }
+
+  public async getAll(filters: { name?: string }) {
+    const dbResult = await this.prisma.professional.findMany({
+      where: {
+        user: {
+          name: {
+            contains: filters.name,
+            mode: "insensitive",
+          },
+        },
+      },
+      include: {
+        company: true,
+        user: true,
+      },
+    });
+
+    const professionals = dbResult.map((professional) => {
+      return new ProfessionalDomain({
+        email: professional.user.email,
+        idProfessional: professional.idProfessional,
+        name: professional.user.name,
+        password: professional.user.password,
+        idUser: professional.user.idUser,
+      });
+    });
+
+    return professionals;
+  }
 }
