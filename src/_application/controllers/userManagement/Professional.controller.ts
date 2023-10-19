@@ -69,20 +69,16 @@ export class ProfessionalController {
 
   async update(req: Request, res: Response) {
     try {
-      const updateProfessionalService = new UpdateProfessionalService();
-
-      const professionalDto: Omit<
-        Partial<ProfessionalDomain>,
-        "idProfessional" | "idUser" | "password" | "email"
-      > = req.body;
-      const idProfessional = req.params.idProfessional;
+      const updateProfessionalService =
+        ProfessionalServiceFactory.createUpdateProfessionalService();
 
       const validator = new UpdateProfessionalValidator();
-      validator.validate(idProfessional, professionalDto);
+      validator.validate(req.params.idProfessional, req.body);
 
+      console.log(req.params)
       const result = await updateProfessionalService.execute(
-        idProfessional,
-        professionalDto
+        req.params.idProfessional,
+        req.body
       );
 
       res

@@ -4,6 +4,7 @@ import { ErrorHandler } from "@utils/ErrorHandler";
 import { CustomError } from "src/_application/CustomError";
 import { ProfessionalRepository } from "src/userManagement/infra/repository/Professional.repository";
 import { ProfessionalDomain } from "../../Professional.domain";
+import { ProfessionalRepositoryFactory } from "@utils/factories/repository/ProfessionalRepository.factory";
 
 export class UpdateProfessionalService implements Service {
   async execute(
@@ -13,29 +14,21 @@ export class UpdateProfessionalService implements Service {
       "idProfessional" | "idUser" | "password" | "email"
     >
   ) {
-    if (!professionalData) {
-      ErrorHandler.throwWithoutLog(
-        new CustomError("Dados do profissional não informados", 400)
-      );
-    }
+    const professionalRepository =
+      ProfessionalRepositoryFactory.createProfessionalRepository();
 
-    const professionalRepository = new ProfessionalRepository(
-      PrismaSingleton.getPrismaClient()
-    );
+    const professional = await professionalRepository.getOne(idProfessional);
 
-    const professionalExists = await professionalRepository.getOne(
-      idProfessional
-    );
-
-    if (professionalExists) {
+    if (!professional) {
       ErrorHandler.throwWithoutLog(
         new CustomError("Profissional não encontrado", 404)
       );
+      return;
     }
 
     const updatedProfessional = await professionalRepository.update(
       idProfessional,
-      { ...professionalData, idUser: professionalExists?.idUser }
+      { ...professionalData, idUser: professional?.idUser }
     );
 
     if (!updatedProfessional) {
