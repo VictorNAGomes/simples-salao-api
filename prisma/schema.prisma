@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_CONNECTOR")
 }
 
@@ -13,14 +13,14 @@ model User {
   email        String        @unique
   password     String
   Professional Professional?
+  Client       Client?
 }
 
 model Client {
   idClient     String         @id @default(uuid())
-  name         String
-  number       String
-  email        String         @unique
+  idUser       String         @unique
   solicitation Solicitation[]
+  user         User           @relation(fields: [idUser], references: [idUser])
 }
 
 model Professional {
