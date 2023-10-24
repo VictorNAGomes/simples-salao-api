@@ -45,4 +45,20 @@ describe("GetAllServicesService", () => {
       }
     });
   });
+  describe("If no service was found", () => {
+    it("should return an error message", async () => {
+      try {
+        const { sut, serviceRepositoryStub } = makeSut();
+
+        jest
+          .spyOn(serviceRepositoryStub, "getAll")
+          .mockReturnValueOnce(new Promise((resolve, reject) => resolve([])));
+
+        const result = await sut.execute();
+        expect(result.message).toEqual('Nenhum serviço encontrado')
+      } catch (err) {
+        console.log(err);
+      }
+    });
+  })
 });
