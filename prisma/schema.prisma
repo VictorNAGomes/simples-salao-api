@@ -96,7 +96,7 @@ model Service {
   idService String @id @default(uuid())
   name      String
   description      String
-  price     String
+  price     Float
   duration  Int
 
   ServiceSolicitation ServiceSolicitation[]

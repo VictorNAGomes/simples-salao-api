@@ -2,15 +2,15 @@ export class ServiceDomain {
   idService!: string;
   name!: string;
   description!: string;
-  valor!: number;
-  duration!: string;
+  price!: number;
+  duration!: number;
 
   constructor(service: {
     idService: string;
     name: string;
     description: string;
-    valor: number;
-    duration: string;
+    price: number;
+    duration: number;
   }) {
     Object.assign(this, service);
   }
