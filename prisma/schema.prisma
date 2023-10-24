@@ -8,9 +8,9 @@ datasource db {
 }
 
 model User {
-  idUser       String       @id @default(uuid())
+  idUser       String        @id @default(uuid())
   name         String
-  email        String       @unique
+  email        String        @unique
   password     String
   Professional Professional?
 }
@@ -93,12 +93,14 @@ model Preferences {
 }
 
 model Service {
-  idService           String                @id @default(uuid())
-  name                String
-  desc                String
-  valor               String
-  CompanyService      CompanyService[]
+  idService String @id @default(uuid())
+  name      String
+  desc      String
+  valor     String
+  duration  Int
+
   ServiceSolicitation ServiceSolicitation[]
+  // CompanyService      CompanyService[]
 }
 
 model CompanyService {
@@ -107,7 +109,7 @@ model CompanyService {
   idService        String
 
   company Company @relation(fields: [idCompany], references: [idCompany])
-  service Service @relation(fields: [idService], references: [idService])
+  // service Service @relation(fields: [idService], references: [idService])
 }
 
 model ServiceSolicitation {

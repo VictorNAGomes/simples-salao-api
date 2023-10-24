@@ -22,7 +22,7 @@ describe("LoginService", () => {
     it("Deve retornar erro", async () => {
       try {
         mockUserRepository.findByEmail.mockReturnValueOnce(
-          new UserDomain({ email: "aaa", password: "123", idUser: "asd" })
+          new UserDomain({ email: "aaa", password: "123", idUser: "asd", name: "aa" })
         );
 
         const loginService = new LoginService(mockUserRepository as any);
