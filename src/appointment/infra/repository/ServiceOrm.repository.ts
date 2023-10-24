@@ -28,4 +28,6 @@ export class ServiceOrmRepository implements ServiceRepository {
       price: dbResult.price,
     });
   }
+
+  getAll!: () => Promise<ServiceDomain[]>;
 }
