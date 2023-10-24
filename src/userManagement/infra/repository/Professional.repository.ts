@@ -94,7 +94,7 @@ export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
         user: {
           name: {
             contains: filters.name,
-            mode: "insensitive",
+            // mode: "insensitive",
           },
         },
       },
