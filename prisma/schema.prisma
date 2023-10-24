@@ -95,8 +95,8 @@ model Preferences {
 model Service {
   idService String @id @default(uuid())
   name      String
-  desc      String
-  valor     String
+  description      String
+  price     String
   duration  Int
 
   ServiceSolicitation ServiceSolicitation[]
