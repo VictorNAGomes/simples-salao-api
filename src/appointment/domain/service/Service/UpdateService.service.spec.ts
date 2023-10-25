@@ -56,4 +56,21 @@ describe("UpdateServiceService", () => {
       expect(response.message).toBe("Serviço atualizado com sucesso");
     });
   });
+  describe("If service was not found", () => {
+    it('should return not found message', async () => {
+      const { sut, serviceRepositoryStub } = makeSut();
+      jest.spyOn(serviceRepositoryStub, 'update').mockImplementationOnce(() => {
+        throw new Error('Service not found')
+      })
+
+      const response = await sut.execute('any_id', {
+        description: 'any_description',
+        duration: 60,
+        name: 'any_name',
+        price: 100
+      })
+
+      expect(response.message).toBe('Serviço não encontrado')
+    })
+  })
 });
