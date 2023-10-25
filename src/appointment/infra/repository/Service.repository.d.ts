@@ -5,4 +5,5 @@ export interface ServiceRepository {
   getAll(): Promise<ServiceDomain[]>;
   delete(idService: string): Promise<void>;
   getOne(idService: string): Promise<ServiceDomain>;
+  update(idService: string, data: Partial<Omit<ServiceDomain, 'idService'>>): Promise<ServiceDomain>;
 }
