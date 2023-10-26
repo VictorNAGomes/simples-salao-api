@@ -135,5 +135,30 @@ export const clientRoutes = (router: ExpressRouter) => {
    */
   router.patch("/client/:idClient", clientController.update);
 
+  /**
+   * @swagger
+   * /client/{idClient}:
+   *   delete:
+   *     summary: Delete a client
+   *     tags:
+   *       - Cliente
+   *     parameters:
+   *       - in: path
+   *         name: idClient
+   *         schema:
+   *           type: string
+   *         required: true
+   *         description: The ID of the client to retrieve.
+   *     responses:
+   *       200:
+   *         description: Client deleted with success.
+   *       404:
+   *         description: Client not found.
+   *       500:
+   *         description: Internal server error.
+   */
+  router.delete("/client/:idClient", clientController.delete);
+
+
   return router;
 };

@@ -1,21 +1,19 @@
 import { Service } from "@interfaces";
 import { ErrorHandler } from "@utils/ErrorHandler";
+import { ClientRepositoryFactory } from "@utils/factories/repository/ClientRepository.factory";
 import { CustomError } from "src/_application/CustomError";
-import { ClientRepository } from "src/userManagement/infra/repository/Client.repository";
 
 export class DeleteClientService implements Service {
-  constructor(private clientRepository: ClientRepository) {
-    this.clientRepository = clientRepository;
-  }
+  constructor() {}
   async execute(idClient: string) {
-    const userExists = await this.clientRepository.delete(idClient);
+    const clientRepository =
+      ClientRepositoryFactory.createClientRepository();
+    const userExists = await clientRepository.getOne(idClient);
 
     if (!userExists)
-      ErrorHandler.throwWithLog(
-        new CustomError("Cliente não encontrado", 404)
-      );
+      new CustomError("Cliente não encontrado", 404)
 
-    const userDeleted = await this.clientRepository.delete(
+    const userDeleted = await clientRepository.delete(
       idClient
     );
     if (!userDeleted)

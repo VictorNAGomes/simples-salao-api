@@ -20,7 +20,7 @@ model Client {
   idClient     String         @id @default(uuid())
   idUser       String         @unique
   solicitation Solicitation[]
-  user         User           @relation(fields: [idUser], references: [idUser])
+  user         User           @relation(fields: [idUser], references: [idUser], onDelete: Cascade, onUpdate: Cascade)
 }
 
 model Professional {

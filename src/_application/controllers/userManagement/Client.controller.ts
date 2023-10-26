@@ -4,6 +4,7 @@ import { GetAllClientsValidator } from "src/_application/validators/userManageme
 import { GetOneClientValidator } from "src/_application/validators/userManagement/Client/GetOneClient.validator";
 import { UpdateClientValidator } from "src/_application/validators/userManagement/Client/UpdateClient.validator";
 import { ClientServiceFactory } from "src/_utils/factories/service/ClientService.factory";
+import { DeleteClientService } from "src/userManagement/domain/service/Client/DeleteClient.service";
 import { GetAllClientsService } from "src/userManagement/domain/service/Client/GetAllClients.service";
 import { GetOneClientService } from "src/userManagement/domain/service/Client/GetOneClient.service";
 
@@ -73,7 +74,6 @@ export class ClientController {
       const validator = new UpdateClientValidator();
       validator.validate(req.params.idClient, req.body);
 
-      console.log(req.params)
       const result = await updateClientService.execute(
         req.params.idClient,
         req.body
@@ -82,6 +82,28 @@ export class ClientController {
       res
         .status(200)
         .json({ result, message: "Cliente atualizado com sucesso" });
+    } catch (error: any) {
+      res.status(error.statusCode ?? 400).json({ message: error.message });
+    }
+  }
+
+  async delete(req: Request, res: Response) {
+    try {
+      const getOneClientService = new GetOneClientService();
+       
+      const deleteClientService =
+        ClientServiceFactory.createDeleteClientService();
+
+      const validator = new GetOneClientValidator();
+      validator.validate(req.params.idClient);
+
+      await deleteClientService.execute(
+        req.params.idClient
+      );
+
+      res
+        .status(200)
+        .json({ message: "Cliente deletado com sucesso" });
     } catch (error: any) {
       res.status(error.statusCode ?? 400).json({ message: error.message });
     }
