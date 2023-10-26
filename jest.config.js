@@ -9,4 +9,7 @@ module.exports = {
     "@utils/(.*)": "<rootDir>/src/_utils/$1",
     "src/(.*)": "<rootDir>/src/$1",
   },
+  transform: {
+    "^.+\\.(t|j)sx?$": "@swc/jest",
+  },
 };
