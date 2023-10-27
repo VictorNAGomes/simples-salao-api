@@ -154,13 +154,13 @@ export class ClientRepository implements ClientRepositoryProtocol {
     return updatedClient;
   }
 
-  delete(idClient: string): Promise<{ idClient: string } | null> {
-    const dbResult = this.prisma.client.delete({
-      where: {
+  async delete(idClient: string): Promise<{ idClient: string } | null> {
+    const dbResult = await this.prisma.client.delete({
+      where: { 
         idClient,
       },
     });
 
-    return dbResult;
+    return {idClient: dbResult.idClient};
   }
 }
