@@ -1,5 +1,5 @@
 import { Router as ExpressRouter } from "express";
-import { ServiceController } from "src/_application/controllers/userManagement/Service.controller";
+import { ServiceController } from "src/_application/controllers/appointment/Service.controller";
 
 export const serviceRoutes = (router: ExpressRouter) => {
   const serviceController = new ServiceController();
