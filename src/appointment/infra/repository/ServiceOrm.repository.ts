@@ -30,4 +30,16 @@ export class ServiceOrmRepository implements ServiceRepository {
   }
 
   getAll!: () => Promise<ServiceDomain[]>;
+  delete(idService: string): Promise<void> {
+    throw new Error("Method not implemented.");
+  }
+  getOne(idService: string): Promise<ServiceDomain> {
+    throw new Error("Method not implemented.");
+  }
+  update(
+    idService: string,
+    data: Partial<Omit<ServiceDomain, "idService">>
+  ): Promise<ServiceDomain> {
+    throw new Error("Method not implemented.");
+  }
 }

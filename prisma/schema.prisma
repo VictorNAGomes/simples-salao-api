@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlite"
+  provider = "postgresql"
   url      = env("DATABASE_CONNECTOR")
 }
 
@@ -93,11 +93,11 @@ model Preferences {
 }
 
 model Service {
-  idService String @id @default(uuid())
-  name      String
-  description      String
-  price     Float
-  duration  Int
+  idService   String @id @default(uuid())
+  name        String
+  description String
+  price       Float
+  duration    Int
 
   ServiceSolicitation ServiceSolicitation[]
   // CompanyService      CompanyService[]

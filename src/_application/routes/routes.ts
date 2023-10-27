@@ -1,5 +1,6 @@
 import { Router as ExpressRouter } from "express";
 import { UserManagementRoutes } from "./userManagement";
+import * as AppointmentRoutes from "./appointment";
 
 export const setupRoutes = (router: ExpressRouter) => {
   /**
@@ -49,6 +50,7 @@ export const setupRoutes = (router: ExpressRouter) => {
   UserManagementRoutes.professional(router);
   UserManagementRoutes.client(router);
   UserManagementRoutes.user(router);
+  AppointmentRoutes.serviceRoutes(router);
 
   return router;
 };
