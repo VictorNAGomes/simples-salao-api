@@ -34,7 +34,7 @@ export class ServiceOrmRepository implements ServiceRepository {
 
     const services: ServiceDomain[] = [];
 
-    for (const service of services) {
+    for (const service of dbResult) {
       services.push(
         new ServiceDomain({
           description: service.description,

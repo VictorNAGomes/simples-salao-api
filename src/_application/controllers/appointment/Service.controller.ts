@@ -18,9 +18,11 @@ export class ServiceController {
 
       const serviceRepository = new ServiceOrmRepository(new PrismaClient());
       const createServiceService = new CreateServiceService(serviceRepository);
-      const result = await createServiceService.execute(createServiceDto);
+      const { result, message } = await createServiceService.execute(
+        createServiceDto
+      );
 
-      return res.status(201).json({ result });
+      return res.status(201).json({ result, message });
     } catch (error: any) {
       return res.status(400).json({ message: error.message });
     }
@@ -30,10 +32,10 @@ export class ServiceController {
     try {
       const serviceRepository = new ServiceOrmRepository(new PrismaClient());
       const getAllServices = new GetAllServicesService(serviceRepository);
-      const result = await getAllServices.execute();
+      const { message, result } = await getAllServices.execute();
       return res.status(200).json({
-        message: result.message,
-        result: result.result,
+        message,
+        result,
       });
     } catch (error: any) {
       return res.status(400).json({ message: error.message });
