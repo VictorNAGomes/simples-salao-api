@@ -10,8 +10,11 @@ export class CreateServiceValidator {
     price: Joi.number().required(),
   });
   validate(objToCompare: CreateServiceDto) {
-    return this.schema.validate(objToCompare, {
+    const { error } = this.schema.validate(objToCompare, {
       abortEarly: false,
     });
+    if (error) {
+      throw new Error(error.message);
+    }
   }
 }
