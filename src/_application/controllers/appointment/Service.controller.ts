@@ -16,11 +16,11 @@ export class ServiceController {
       const createServiceValidator = new CreateServiceValidator();
       createServiceValidator.validate(createServiceDto);
 
-      // const serviceRepository = new ServiceOrmRepository(new PrismaClient());
-      // const createServiceService = new CreateServiceService(serviceRepository);
-      // const result = createServiceService.execute(createServiceDto);
+      const serviceRepository = new ServiceOrmRepository(new PrismaClient());
+      const createServiceService = new CreateServiceService(serviceRepository);
+      const result = await createServiceService.execute(createServiceDto);
 
-      return res.status(201).json({ result: "teste" });
+      return res.status(201).json({ result });
     } catch (error: any) {
       return res.status(400).json({ message: error.message });
     }
