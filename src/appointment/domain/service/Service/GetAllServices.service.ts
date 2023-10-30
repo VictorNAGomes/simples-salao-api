@@ -22,6 +22,7 @@ export class GetAllServicesService implements Service {
         result,
       };
     } catch (error: any) {
+      console.log(error)
       throw new Error("Não foi possível listar os usuários");
     }
   }

@@ -29,7 +29,25 @@ export class ServiceOrmRepository implements ServiceRepository {
     });
   }
 
-  getAll!: () => Promise<ServiceDomain[]>;
+  async getAll(): Promise<ServiceDomain[]> {
+    const dbResult = await this.prisma.service.findMany();
+
+    const services: ServiceDomain[] = [];
+
+    for (const service of services) {
+      services.push(
+        new ServiceDomain({
+          description: service.description,
+          duration: service.duration,
+          idService: service.idService,
+          name: service.name,
+          price: service.price,
+        })
+      );
+    }
+
+    return services;
+  }
   delete(idService: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
