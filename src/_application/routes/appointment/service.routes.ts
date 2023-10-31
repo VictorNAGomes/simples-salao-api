@@ -47,5 +47,28 @@ export const serviceRoutes = (router: ExpressRouter) => {
    */
   router.get("/service", serviceController.listServices);
 
+  /**
+   * @swagger
+   * /service/{idService}:
+   *  get:
+   *   tags:
+   *    - Service
+   *   summary: Get one service
+   *   parameters:
+   *    - in: path
+   *      name: idService
+   *      required: true
+   *      description: ID of the service
+   *      example: UUID
+   *   responses:
+   *    200:
+   *     description: Service
+   *     content:
+   *      application/json:
+   *       schema:
+   *        $ref: '#/components/schemas/Service'
+   */
+  router.get("/service/:idService", serviceController.getOneService);
+
   return router;
 };

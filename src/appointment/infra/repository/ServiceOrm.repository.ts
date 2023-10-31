@@ -51,8 +51,24 @@ export class ServiceOrmRepository implements ServiceRepository {
   delete(idService: string): Promise<void> {
     throw new Error("Method not implemented.");
   }
-  getOne(idService: string): Promise<ServiceDomain> {
-    throw new Error("Method not implemented.");
+  async getOne(idService: string): Promise<ServiceDomain | null> {
+    const dbResult = await this.prisma.service.findUnique({
+      where: {
+        idService,
+      },
+    });
+
+    if (!dbResult) {
+      return null;
+    }
+
+    return new ServiceDomain({
+      description: dbResult.description,
+      duration: dbResult.duration,
+      idService: dbResult.idService,
+      name: dbResult.name,
+      price: dbResult.price,
+    });
   }
   update(
     idService: string,
