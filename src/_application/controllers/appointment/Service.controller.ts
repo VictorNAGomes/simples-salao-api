@@ -48,7 +48,7 @@ export class ServiceController {
 
   async getOneService(req: Request, res: Response) {
     try {
-      console.log("requisição feita")
+      console.log("requisição feita");
       const idService: string = req.params.idService;
       const getOneServiceValidator = new GetOneServiceValidator();
       getOneServiceValidator.validate(idService);
@@ -59,10 +59,19 @@ export class ServiceController {
       const getOneServiceService = new GetOneServiceService(serviceRepository);
 
       const { message, result } = await getOneServiceService.execute(idService);
-      console.log(message, result)
       return res.status(200).json({
         message,
         result,
+      });
+    } catch (error: any) {
+      return res.status(400).json({ message: error.message });
+    }
+  }
+
+  updateService(req: Request, res: Response) {
+    try {
+      return res.status(200).json({
+        message: "updateService",
       });
     } catch (error: any) {
       return res.status(400).json({ message: error.message });
