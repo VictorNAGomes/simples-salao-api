@@ -28,6 +28,23 @@ export const setupRoutes = (router: ExpressRouter) => {
    *           type: number
    *           format: integer
    *           description: The duration of the service in minutes.
+   *     ServiceUpdate:
+   *       type: object
+   *       properties:
+   *         name:
+   *           type: string
+   *           description: The name of the service.
+   *         description:
+   *           type: string
+   *           description: The description of the service.
+   *         price:
+   *           type: number
+   *           format: float
+   *           description: The price of the service.
+   *         duration:
+   *           type: number
+   *           format: integer
+   *           description: The duration of the service in minutes.
    *     Professional:
    *       type: object
    *       properties:

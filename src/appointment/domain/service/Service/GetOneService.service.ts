@@ -6,13 +6,21 @@ export class GetOneServiceService implements Service {
   async execute(idService: string) {
     try {
       const result = await this.serviceRepository.getOne(idService);
+
+      if (!result) {
+        return {
+          message: "Serviço não encontrado",
+          result,
+        };
+      }
+
       return {
         message: "Serviço encontrado com sucesso",
         result,
       };
     } catch (error) {
       return {
-        message: "Serviço não encontrado",
+        message: "Algum erro inesperado ocorreu",
       };
     }
   }

@@ -1,7 +1,8 @@
-import { ServiceRepository } from "src/appointment/infra/repository/ServiceOrm.repository";
+import { PrismaSingleton } from "@singletons";
+import { ServiceOrmRepository } from "src/appointment/infra/repository/ServiceOrm.repository";
 
 export class ServiceRepositoryFactory {
-  static create() {
-    return new ServiceRepository();
+  static make() {
+    return new ServiceOrmRepository(PrismaSingleton.getPrismaClient());
   }
 }

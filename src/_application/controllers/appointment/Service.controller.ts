@@ -1,6 +1,10 @@
 import { PrismaSingleton } from "@singletons";
+import { ServiceRepositoryFactory } from "@utils/factories/repository/ServiceRepository.factory";
+import { ServiceServiceFactory } from "@utils/factories/service/ServiceService.factory";
+import { ServiceValidatorFactory } from "@utils/factories/validator/ServiceValidator.factory";
 import { Request, Response } from "express";
 import { CreateServiceDto } from "src/_application/dtos/appointments/service/CreateService.dto";
+import { UpdateServiceDto } from "src/_application/dtos/appointments/service/UpdateService.dto";
 import { CreateServiceValidator } from "src/_application/validators/appointment/service/CreateService.validator";
 import { GetOneServiceValidator } from "src/_application/validators/appointment/service/GetOneService.validator";
 import { CreateServiceService } from "src/appointment/domain/service/Service/CreateService.service";
@@ -70,6 +74,19 @@ export class ServiceController {
 
   updateService(req: Request, res: Response) {
     try {
+      const idService: string = req.params.idService;
+      const updateServiceDto: UpdateServiceDto = req.body;
+
+      const updateServiceService =
+        ServiceServiceFactory.makeUpdateServiceService();
+
+      const updateServiceValidator =
+        ServiceValidatorFactory.makeUpdateServiceValidator();
+
+      updateServiceValidator.validate(updateServiceDto);
+
+      updateServiceService.execute(idService, updateServiceDto);
+
       return res.status(200).json({
         message: "updateService",
       });

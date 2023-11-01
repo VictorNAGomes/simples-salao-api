@@ -88,7 +88,7 @@ export const serviceRoutes = (router: ExpressRouter) => {
    *    content:
    *     application/json:
    *      schema:
-   *       $ref: '#/components/schemas/Service'
+   *       $ref: '#/components/schemas/ServiceUpdate'
    *   responses:
    *    200:
    *     description: Service updated
