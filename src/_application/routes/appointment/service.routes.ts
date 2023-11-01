@@ -94,5 +94,34 @@ export const serviceRoutes = (router: ExpressRouter) => {
    *     description: Service updated
    */
   router.patch("/service/:idService", serviceController.updateService);
+
+  /**
+   * @swagger
+   * /service/{idService}:
+   *  delete:
+   *   tags:
+   *    - Service
+   *   summary: Delete one service
+   *   parameters:
+   *    - in: path
+   *      name: idService
+   *      required: true
+   *      description: ID of the service
+   *      example: UUID
+   *   responses:
+   *    200:
+   *     description: Service deleted
+   *     content:
+   *      application/json:
+   *       schema:
+   *        type: object
+   *        properties:
+   *         message:
+   *          type: string
+   *    404:
+   *     description: Service not found
+   */
+  router.delete("/service/:idService", serviceController.deleteService);
+
   return router;
 };

@@ -6,13 +6,13 @@ export class DeleteServiceService implements Service {
 
   async execute(idService: string) {
     try {
-      const result = await this.serviceRepository.delete(idService);
+      await this.serviceRepository.delete(idService);
 
       return {
         message: "Serviço excluído com sucesso",
       };
     } catch (error: any) {
-      if (error.message === "Service not found") {
+      if (error.code === "P2025") {
         return {
           message: "Serviço não encontrado",
         };

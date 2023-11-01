@@ -48,9 +48,6 @@ export class ServiceOrmRepository implements ServiceRepository {
 
     return services;
   }
-  delete(idService: string): Promise<void> {
-    throw new Error("Method not implemented.");
-  }
   async getOne(idService: string): Promise<ServiceDomain | null> {
     const dbResult = await this.prisma.service.findUnique({
       where: {
@@ -91,5 +88,8 @@ export class ServiceOrmRepository implements ServiceRepository {
     }
 
     return ServiceDomain.create(dbResult);
+  }
+  async delete(idService: string) {
+    await this.prisma.service.delete({ where: { idService } });
   }
 }

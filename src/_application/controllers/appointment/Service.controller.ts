@@ -100,4 +100,23 @@ export class ServiceController {
       return res.status(400).json({ message: error.message });
     }
   }
+
+  async deleteService(req: Request, res: Response) {
+    try {
+      // dados da requisição
+      const idService = req.params.idService;
+      // validacao
+      const deleteServiceValidator =
+        ServiceValidatorFactory.makeDeleteServiceValidator();
+      deleteServiceValidator.validate(idService);
+      // servico
+      const deleteServiceService =
+        ServiceServiceFactory.makeDeleteServiceService();
+      const result = await deleteServiceService.execute(idService);
+
+      return res.status(200).json(result);
+    } catch ({ message }: any) {
+      return res.status(400).json({ message: message });
+    }
+  }
 }
