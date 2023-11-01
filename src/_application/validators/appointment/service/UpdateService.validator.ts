@@ -8,9 +8,10 @@ export class UpdateServiceValidator {
     description: Joi.string(),
     duration: Joi.number(),
     price: Joi.number(),
+    idService: Joi.string().uuid(),
   });
-  validate(objToCompare: UpdateServiceDto) {
-    const { error } = this.schema.validate(objToCompare, {
+  validate(objToCompare: UpdateServiceDto, idService: string) {
+    const { error } = this.schema.validate({...objToCompare, idService}, {
       abortEarly: false,
     });
     if (error) {

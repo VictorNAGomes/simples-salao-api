@@ -10,16 +10,13 @@ export class UpdateServiceService implements Service {
   ) {
     try {
       const result = await this.serviceRepository.update(idService, service);
+
       return {
         message: "Serviço atualizado com sucesso",
         result,
       };
     } catch (error: any) {
-      if (error.message === "Service not found") {
-        return {
-          message: "Serviço não encontrado",
-        };
-      }
+      console.log(error);
       return {
         message: "Não foi possível editar o serviço",
       };

@@ -72,24 +72,30 @@ export class ServiceController {
     }
   }
 
-  updateService(req: Request, res: Response) {
+  async updateService(req: Request, res: Response) {
     try {
+      // Obter os dados do serviço a ser atualizado
       const idService: string = req.params.idService;
       const updateServiceDto: UpdateServiceDto = req.body;
 
-      const updateServiceService =
-        ServiceServiceFactory.makeUpdateServiceService();
-
+      // Instanciar o validador de atualização de serviço
       const updateServiceValidator =
         ServiceValidatorFactory.makeUpdateServiceValidator();
 
-      updateServiceValidator.validate(updateServiceDto);
+      // Validar se os dados de atualização de serviço estão corretos
+      updateServiceValidator.validate(updateServiceDto, idService);
 
-      updateServiceService.execute(idService, updateServiceDto);
+      // Instanciar o serviço de atualização de serviço
+      const updateServiceService =
+        ServiceServiceFactory.makeUpdateServiceService();
 
-      return res.status(200).json({
-        message: "updateService",
-      });
+      // Atualizar o serviço
+      const result = await updateServiceService.execute(
+        idService,
+        updateServiceDto
+      );
+
+      return res.status(200).json(result);
     } catch (error: any) {
       return res.status(400).json({ message: error.message });
     }

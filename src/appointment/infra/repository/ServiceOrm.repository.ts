@@ -70,10 +70,26 @@ export class ServiceOrmRepository implements ServiceRepository {
       price: dbResult.price,
     });
   }
-  update(
+  async update(
     idService: string,
     data: Partial<Omit<ServiceDomain, "idService">>
-  ): Promise<ServiceDomain> {
-    throw new Error("Method not implemented.");
+  ): Promise<ServiceDomain | null> {
+    const dbResult = await this.prisma.service.update({
+      data: {
+        description: data.description,
+        duration: data.duration,
+        name: data.name,
+        price: data.price,
+      },
+      where: {
+        idService,
+      },
+    });
+
+    if (!dbResult) {
+      return null;
+    }
+
+    return ServiceDomain.create(dbResult);
   }
 }

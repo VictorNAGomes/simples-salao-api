@@ -14,4 +14,8 @@ export class ServiceDomain {
   }) {
     Object.assign(this, service);
   }
+
+  static create(service: ServiceDomain): ServiceDomain {
+    return new ServiceDomain(service)
+  }
 }
