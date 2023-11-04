@@ -12,6 +12,6 @@ export class CreateServiceService implements Service {
       throw new Error("Não foi possível criar o serviço");
     }
 
-    return result;
+    return { message: "Serviço criado com sucesso", result };
   }
 }
