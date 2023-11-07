@@ -17,107 +17,52 @@ model User {
 }
 
 model Client {
-  idClient     String         @id @default(uuid())
-  idUser       String         @unique
-  solicitation Solicitation[]
-  user         User           @relation(fields: [idUser], references: [idUser], onDelete: Cascade, onUpdate: Cascade)
+  idClient         String        @id @default(uuid())
+  idUser           String        @unique
+  user             User          @relation(fields: [idUser], references: [idUser], onDelete: Cascade, onUpdate: Cascade)
+  Company          Company?      @relation(fields: [companyIdCompany], references: [idCompany])
+  companyIdCompany String?
+  Appointment      Appointment[]
 }
 
 model Professional {
-  idProfessional String  @id @default(uuid())
-  idUser         String  @unique
+  idProfessional String        @id @default(uuid())
+  idUser         String        @unique
   idCompany      String
-  company        Company @relation(fields: [idCompany], references: [idCompany])
-  user           User    @relation(fields: [idUser], references: [idUser])
-}
-
-model Solicitation {
-  idSolicitation      String                @id @default(uuid())
-  data                DateTime
-  idClient            String
-  client              Client                @relation(fields: [idClient], references: [idClient])
-  Appointment         Appointment[]
-  ServiceSolicitation ServiceSolicitation[]
-}
-
-model Appointment {
-  idAppointment  String       @id @default(uuid())
-  idSolicitation String
-  solicitation   Solicitation @relation(fields: [idSolicitation], references: [idSolicitation])
-}
-
-model Employee {
-  idEmployee    String   @id @default(uuid())
-  name          String
-  cpf           String   @unique
-  ctps          Int      @unique
-  phone         Int
-  salary        Decimal
-  admissionDate DateTime
-
-  idPosition String
-  position   Position @relation(fields: [idPosition], references: [idPosition])
-}
-
-model Position {
-  idPosition  String     @id @default(uuid())
-  name        String
-  description String
-  employee    Employee[]
+  company        Company       @relation(fields: [idCompany], references: [idCompany])
+  user           User          @relation(fields: [idUser], references: [idUser])
+  Appointment    Appointment[]
 }
 
 model Company {
-  idCompany          String               @id @default(uuid())
-  cnpj               String               @unique
-  name               String
-  creationDate       DateTime
-  CompanyPreferences CompanyPreferences[]
-  CompanyService     CompanyService[]
-  Professionals      Professional[]
-}
-
-model CompanyPreferences {
-  idCompanyPreferences String @id @default(uuid())
-  idCompany            String
-  idPreferences        String
-  valor                String
-
-  company     Company     @relation(fields: [idCompany], references: [idCompany])
-  preferences Preferences @relation(fields: [idPreferences], references: [idPreferences])
-}
-
-model Preferences {
-  idPreferences      String               @id @default(uuid())
-  desc               String
-  CompanyPreferences CompanyPreferences[]
+  idCompany     String         @id @default(uuid())
+  cnpj          String         @unique
+  name          String
+  creationDate  DateTime
+  Professionals Professional[]
+  Clients       Client[]
+  Service       Service[]
 }
 
 model Service {
-  idService   String @id @default(uuid())
+  idService   String        @id @default(uuid())
+  idCompany   String
   name        String
   description String
   price       Float
   duration    Int
-
-  ServiceSolicitation ServiceSolicitation[]
-  // CompanyService      CompanyService[]
+  appointment Appointment[]
+  company     Company       @relation(fields: [idCompany], references: [idCompany])
 }
 
-model CompanyService {
-  idCompanyService String @id @default(uuid())
-  idCompany        String
-  idService        String
-
-  company Company @relation(fields: [idCompany], references: [idCompany])
-  // service Service @relation(fields: [idService], references: [idService])
-}
-
-model ServiceSolicitation {
-  idServiceSolicitation String @id @default(uuid())
-  idSolicitation        String
-  idService             String
-  ammount               Int
-
-  solicitation Solicitation @relation(fields: [idSolicitation], references: [idSolicitation])
-  service      Service      @relation(fields: [idService], references: [idService])
+model Appointment {
+  idAppointment  String       @id @default(uuid())
+  idClient       String
+  idProfessional String
+  idService      String
+  date           DateTime
+  approved       Boolean
+  client         Client       @relation(fields: [idClient], references: [idClient])
+  professional   Professional @relation(fields: [idProfessional], references: [idProfessional])
+  service        Service      @relation(fields: [idService], references: [idService])
 }
