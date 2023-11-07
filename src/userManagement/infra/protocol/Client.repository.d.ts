@@ -13,5 +13,5 @@ export interface ClientRepositoryProtocol {
       "idClient" | "idUser" | "password" | "email"
     >
   ): Promise<{ idClient: string } | null>;
-  delete(idClient: string): Promise<{ idClient: string } | null>;
+  delete(idClient: string): Promise<true | null>;
 }

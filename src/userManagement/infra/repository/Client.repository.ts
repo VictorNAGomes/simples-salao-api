@@ -1,6 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { ClientDomain } from "../../domain/Client.domain";
 import { ClientRepositoryProtocol } from "../protocol";
+import { profile } from "console";
 
 export class ClientRepository implements ClientRepositoryProtocol {
   prisma: PrismaClient;
@@ -154,13 +155,22 @@ export class ClientRepository implements ClientRepositoryProtocol {
     return updatedClient;
   }
 
-  async delete(idClient: string): Promise<{ idClient: string } | null> {
-    const dbResult = await this.prisma.client.delete({
-      where: { 
-        idClient,
-      },
-    });
+  async delete(idClient: string): Promise<true | null> {
+    const client: ClientDomain | null = await this.getOne(idClient)
 
-    return {idClient: dbResult.idClient};
+    await this.prisma.$transaction([
+      this.prisma.client.delete({
+        where: { 
+          idClient,
+        },
+      }),
+      this.prisma.user.delete({
+        where:{
+          idUser: client?.idUser
+        }
+      })
+    ])
+
+    return true;
   }
 }
