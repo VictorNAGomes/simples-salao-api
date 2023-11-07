@@ -52,7 +52,6 @@ export class ServiceController {
 
   async getOneService(req: Request, res: Response) {
     try {
-      console.log("requisição feita");
       const idService: string = req.params.idService;
       const getOneServiceValidator = new GetOneServiceValidator();
       getOneServiceValidator.validate(idService);

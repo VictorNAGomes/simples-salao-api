@@ -74,8 +74,6 @@ export class ProfessionalController {
 
       const validator = new UpdateProfessionalValidator();
       validator.validate(req.params.idProfessional, req.body);
-
-      console.log(req.params)
       const result = await updateProfessionalService.execute(
         req.params.idProfessional,
         req.body

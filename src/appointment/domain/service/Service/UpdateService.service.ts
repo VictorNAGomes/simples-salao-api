@@ -16,7 +16,11 @@ export class UpdateServiceService implements Service {
         result,
       };
     } catch (error: any) {
-      console.log(error);
+      if(error.message === "P2025") {
+        return {
+          message: "Serviço não encontrado",
+        };
+      }
       return {
         message: "Não foi possível editar o serviço",
       };

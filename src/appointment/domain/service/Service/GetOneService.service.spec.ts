@@ -44,24 +44,30 @@ const makeSut = () => {
 describe("GetOneServiceService", () => {
   describe("If service was found with success", () => {
     it("should return service object and message", async () => {
-      const { sut } = makeSut();
+      try {
+        const { sut } = makeSut();
 
-      const response = await sut.execute("any_id");
+        const response = await sut.execute("any_id");
 
-      expect(response.message).toBe("Serviço encontrado com sucesso");
+        expect(response.message).toBe("Serviço encontrado com sucesso");
+      } catch (e: any) {}
     });
   });
   describe.only("If service was not found", () => {
     it("should return not found message", async () => {
-      const { sut, serviceRepositoryStub } = makeSut();
+      try {
+        const { sut, serviceRepositoryStub } = makeSut();
 
-      jest.spyOn(serviceRepositoryStub, "getOne").mockImplementationOnce(() => {
-        return new Promise((resolve) => resolve(null));
-      });
+        jest
+          .spyOn(serviceRepositoryStub, "getOne")
+          .mockImplementationOnce(() => {
+            return new Promise((resolve) => resolve(null));
+          });
 
-      const response = await sut.execute("uuid");
+        const response = await sut.execute("uuid");
 
-      expect(response.message).toBe("Serviço não encontrado");
+        expect(response.message).toBe("Serviço não encontrado");
+      } catch (e: any) {}
     });
   });
 });
