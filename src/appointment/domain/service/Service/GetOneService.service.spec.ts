@@ -13,7 +13,7 @@ const makeSut = () => {
     delete(idService: string): Promise<void> {
       throw new Error("Method not implemented.");
     }
-    async getOne(idService: string): Promise<ServiceDomain> {
+    async getOne(idService: string): Promise<ServiceDomain | null> {
       return await new Promise<ServiceDomain>((resolve) =>
         resolve(
           new ServiceDomain({
@@ -25,6 +25,12 @@ const makeSut = () => {
           })
         )
       );
+    }
+    update(
+      idService: string,
+      data: Partial<Omit<ServiceDomain, "idService">>
+    ): Promise<ServiceDomain | null> {
+      throw new Error("Method not implemented.");
     }
   }
 
@@ -45,12 +51,12 @@ describe("GetOneServiceService", () => {
       expect(response.message).toBe("Serviço encontrado com sucesso");
     });
   });
-  describe("If service was not found", () => {
+  describe.only("If service was not found", () => {
     it("should return not found message", async () => {
       const { sut, serviceRepositoryStub } = makeSut();
 
       jest.spyOn(serviceRepositoryStub, "getOne").mockImplementationOnce(() => {
-        throw new Error("Service not found");
+        return new Promise((resolve) => resolve(null));
       });
 
       const response = await sut.execute("uuid");

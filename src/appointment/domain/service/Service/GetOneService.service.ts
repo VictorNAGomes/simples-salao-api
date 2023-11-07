@@ -7,6 +7,8 @@ export class GetOneServiceService implements Service {
     try {
       const result = await this.serviceRepository.getOne(idService);
 
+      console.log(result);
+
       if (!result) {
         return {
           message: "Serviço não encontrado",
