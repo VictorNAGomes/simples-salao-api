@@ -14,6 +14,10 @@ export const setupRoutes = (router: ExpressRouter) => {
    *           type: string
    *           format: uuid
    *           description: The unique identifier of the service.
+   *         idCompany:
+   *           type: string
+   *           format: uuid
+   *           description: The company the service belongs to
    *         name:
    *           type: string
    *           description: The name of the service.

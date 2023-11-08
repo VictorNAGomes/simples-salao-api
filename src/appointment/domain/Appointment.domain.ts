@@ -1,17 +1,15 @@
-import { ClientDomain } from "src/userManagement/domain";
+import { ClientDomain, ProfessionalDomain } from "src/userManagement/domain";
 import { ServiceDomain } from "./Service.domain";
 
 export class AppointmentDomain {
   idAppointment!: string;
   idService!: string;
   idClient!: string;
+  idProfessional!: string;
 
   date!: Date;
   approved!: boolean;
   createdByProfessional!: boolean;
-
-  service!: ServiceDomain;
-  client!: ClientDomain;
 
   constructor(appointment: AppointmentDomain) {
     Object.assign(this, appointment);

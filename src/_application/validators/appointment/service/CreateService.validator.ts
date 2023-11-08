@@ -8,6 +8,7 @@ export class CreateServiceValidator {
     description: Joi.string().required(),
     duration: Joi.number().required(),
     price: Joi.number().required(),
+    idCompany: Joi.string().uuid().required(),
   });
   validate(objToCompare: CreateServiceDto) {
     const { error } = this.schema.validate(objToCompare, {

@@ -3,4 +3,5 @@ export class CreateServiceDto {
   description!: string;
   price!: number;
   duration!: number;
+  idCompany!: string;
 }
