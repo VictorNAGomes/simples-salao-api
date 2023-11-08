@@ -56,13 +56,14 @@ model Service {
 }
 
 model Appointment {
-  idAppointment  String       @id @default(uuid())
-  idClient       String
-  idProfessional String
-  idService      String
-  date           DateTime
-  approved       Boolean
-  client         Client       @relation(fields: [idClient], references: [idClient])
-  professional   Professional @relation(fields: [idProfessional], references: [idProfessional])
-  service        Service      @relation(fields: [idService], references: [idService])
+  idAppointment         String       @id @default(uuid())
+  idClient              String
+  idProfessional        String
+  idService             String
+  date                  DateTime
+  approved              Boolean
+  createdByProfessional Boolean
+  client                Client       @relation(fields: [idClient], references: [idClient])
+  professional          Professional @relation(fields: [idProfessional], references: [idProfessional])
+  service               Service      @relation(fields: [idService], references: [idService])
 }
