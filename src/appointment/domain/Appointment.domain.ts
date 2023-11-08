@@ -3,14 +3,17 @@ import { ServiceDomain } from "./Service.domain";
 
 export class AppointmentDomain {
   idAppointment!: string;
-  ammount!: number;
   idService!: string;
-  service!: ServiceDomain
   idClient!: string;
-  client!: ClientDomain;
-  
 
-  constructor(appointment: { idAppointment: string }) {
+  date!: Date;
+  approved!: boolean;
+  createdByProfessional!: boolean;
+
+  service!: ServiceDomain;
+  client!: ClientDomain;
+
+  constructor(appointment: AppointmentDomain) {
     Object.assign(this, appointment);
   }
 
