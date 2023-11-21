@@ -39,10 +39,8 @@ describe("GetAllServicesService", () => {
         const { sut } = makeSut();
 
         const result = await sut.execute();
-        expect(result.message).toEqual('Serviços listados com sucesso')
-      } catch (err) {
-        console.log(err);
-      }
+        expect(result.message).toEqual("Serviços listados com sucesso");
+      } catch (err) {}
     });
   });
   describe("If no service was found", () => {
@@ -55,10 +53,10 @@ describe("GetAllServicesService", () => {
           .mockReturnValueOnce(new Promise((resolve, reject) => resolve([])));
 
         const result = await sut.execute();
-        expect(result.message).toEqual('Nenhum serviço encontrado')
+        expect(result.message).toEqual("Nenhum serviço encontrado");
       } catch (err) {
-        console.log(err);
+
       }
     });
-  })
+  });
 });

@@ -1,5 +1,6 @@
 export class ServiceDomain {
   idService!: string;
+  idCompany!: string;
   name!: string;
   description!: string;
   price!: number;
@@ -11,6 +12,7 @@ export class ServiceDomain {
     description: string;
     price: number;
     duration: number;
+    idCompany: string;
   }) {
     Object.assign(this, service);
   }

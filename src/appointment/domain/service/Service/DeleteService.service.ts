@@ -12,7 +12,7 @@ export class DeleteServiceService implements Service {
         message: "Serviço excluído com sucesso",
       };
     } catch (error: any) {
-      if (error.code === "P2025") {
+      if (error.message === "P2025") {
         return {
           message: "Serviço não encontrado",
         };

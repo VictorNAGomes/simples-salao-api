@@ -16,6 +16,12 @@ const makeSut = () => {
     async delete(idService: string): Promise<void> {
       await new Promise((resolve) => resolve(null));
     }
+    update(
+      idService: string,
+      data: Partial<Omit<ServiceDomain, "idService">>
+    ): Promise<ServiceDomain | null> {
+      throw new Error("Method not implemented.");
+    }
   }
 
   const serviceRepositoryStub = new ServiceRepositoryStub();
@@ -36,11 +42,11 @@ describe("DeleteServiceService", () => {
     });
   });
   describe("If service was not found", () => {
-    it("should throw not found error", async () => {
+    it("should return not found error", async () => {
       const { sut, serviceRepositoryStub } = makeSut();
 
       jest.spyOn(serviceRepositoryStub, "delete").mockImplementationOnce(() => {
-        throw new Error("Service not found");
+        throw new Error("P2025");
       });
 
       const response = await sut.execute("uuid");

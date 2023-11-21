@@ -10,7 +10,7 @@ export class GetAllServicesService implements Service {
   async execute() {
     try {
       const result = await this.serviceRepository.getAll();
-      console.log(result);
+      
       if (!result) {
         return {
           message: "Nenhum serviço encontrado",
@@ -23,7 +23,7 @@ export class GetAllServicesService implements Service {
         result,
       };
     } catch (error: any) {
-      console.log(error);
+      
       throw new Error("Não foi possível listar os usuários");
     }
   }

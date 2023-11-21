@@ -15,6 +15,10 @@ export const setupRoutes = (router: ExpressRouter) => {
    *           type: string
    *           format: uuid
    *           description: The unique identifier of the service.
+   *         idCompany:
+   *           type: string
+   *           format: uuid
+   *           description: The company the service belongs to
    *         name:
    *           type: string
    *           description: The name of the service.
@@ -85,12 +89,38 @@ export const setupRoutes = (router: ExpressRouter) => {
    *           type: string
    *           format: date-time
    *           description: The creation date of the company
+   *     Appointment:
+   *       type: object
+   *       properties:
+   *         idClient:
+   *           type: string
+   *           format: uuid
+   *           description: The unique identifier of the client.
+   *         idProfessional:
+   *           type: string
+   *           format: uuid
+   *           description: The unique identifier of the professional.
+   *         idService:
+   *           type: string
+   *           format: uuid
+   *           description: The unique identifier of the service.
+   *         date:
+   *           type: string
+   *           format: date-time
+   *           description: The date and time of the appointment.
+   *         approved:
+   *           type: boolean
+   *           description: Whether the appointment has been approved.
+   *         createdByProfessional:
+   *           type: boolean
+   *           description: Whether the appointment was created by the professional.
    */
   UserManagementRoutes.professional(router);
   UserManagementRoutes.client(router);
   UserManagementRoutes.user(router);
   AppointmentRoutes.serviceRoutes(router);
   CompanyRoutes.CompanyRoutes(router)
+  AppointmentRoutes.appointmentRoutes(router);
 
   return router;
 };

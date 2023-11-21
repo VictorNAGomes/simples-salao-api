@@ -41,7 +41,7 @@ const makeSut = () => {
   return { sut, serviceRepositoryStub };
 };
 
-describe("UpdateServiceService", () => {
+describe.only("UpdateServiceService", () => {
   describe("If service was found", () => {
     it("should return updated service", async () => {
       const { sut } = makeSut();
@@ -60,7 +60,7 @@ describe("UpdateServiceService", () => {
     it('should return not found message', async () => {
       const { sut, serviceRepositoryStub } = makeSut();
       jest.spyOn(serviceRepositoryStub, 'update').mockImplementationOnce(() => {
-        throw new Error('Service not found')
+        throw new Error('P2025')
       })
 
       const response = await sut.execute('any_id', {

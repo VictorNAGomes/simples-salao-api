@@ -17,6 +17,7 @@ export class ServiceOrmRepository implements ServiceRepository {
         duration: service.duration,
         name: service.name,
         price: service.price,
+        idCompany: service.idCompany,
       },
     });
 
@@ -26,6 +27,7 @@ export class ServiceOrmRepository implements ServiceRepository {
       duration: dbResult.duration,
       name: dbResult.name,
       price: dbResult.price,
+      idCompany: dbResult.idCompany,
     });
   }
 
@@ -42,6 +44,7 @@ export class ServiceOrmRepository implements ServiceRepository {
           idService: service.idService,
           name: service.name,
           price: service.price,
+          idCompany: service.idCompany,
         })
       );
     }
@@ -65,6 +68,7 @@ export class ServiceOrmRepository implements ServiceRepository {
       idService: dbResult.idService,
       name: dbResult.name,
       price: dbResult.price,
+      idCompany: dbResult.idCompany,
     });
   }
   async update(
