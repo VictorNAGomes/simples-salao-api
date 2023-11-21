@@ -1,6 +1,7 @@
 import { Router as ExpressRouter } from "express";
 import { UserManagementRoutes } from "./userManagement";
 import * as AppointmentRoutes from "./appointment";
+import * as CompanyRoutes from "./company"
 
 export const setupRoutes = (router: ExpressRouter) => {
   /**
@@ -89,6 +90,7 @@ export const setupRoutes = (router: ExpressRouter) => {
   UserManagementRoutes.client(router);
   UserManagementRoutes.user(router);
   AppointmentRoutes.serviceRoutes(router);
+  CompanyRoutes.CompanyRoutes(router)
 
   return router;
 };

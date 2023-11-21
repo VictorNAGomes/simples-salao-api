@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "sqlite"
   url      = env("DATABASE_CONNECTOR")
 }
 
@@ -67,30 +67,34 @@ model Position {
 }
 
 model Company {
-  idCompany          String               @id @default(uuid())
-  cnpj               String               @unique
-  name               String
-  creationDate       DateTime
-  CompanyPreferences CompanyPreferences[]
-  CompanyService     CompanyService[]
-  Professionals      Professional[]
+  idCompany    String   @id @default(uuid())
+  cnpj         String   @unique
+  name         String
+  creationDate DateTime
+  timeUnit     Int
+  openingTime  Int
+  closingTime  Int
+
+  // CompanyPreferences CompanyPreferences[]
+  CompanyService CompanyService[]
+  Professionals  Professional[]
 }
 
-model CompanyPreferences {
-  idCompanyPreferences String @id @default(uuid())
-  idCompany            String
-  idPreferences        String
-  valor                String
+// model CompanyPreferences {
+//   idCompanyPreferences String @id @default(uuid())
+//   idCompany            String
+//   idPreferences        String
+//   valor                String
 
-  company     Company     @relation(fields: [idCompany], references: [idCompany])
-  preferences Preferences @relation(fields: [idPreferences], references: [idPreferences])
-}
+//   company     Company     @relation(fields: [idCompany], references: [idCompany])
+//   preferences Preferences @relation(fields: [idPreferences], references: [idPreferences])
+// }
 
-model Preferences {
-  idPreferences      String               @id @default(uuid())
-  desc               String
-  CompanyPreferences CompanyPreferences[]
-}
+// model Preferences {
+//   idPreferences      String               @id @default(uuid())
+//   desc               String
+//   CompanyPreferences CompanyPreferences[]
+// }
 
 model Service {
   idService   String @id @default(uuid())

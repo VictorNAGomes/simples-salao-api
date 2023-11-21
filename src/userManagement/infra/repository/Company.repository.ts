@@ -1,6 +1,6 @@
 import { PrismaClient } from "@prisma/client";
 import { CompanyRepositoryProtocol } from "../protocol";
-import { CompanyDomain } from "src/userManagement/domain/Company.domain";
+import { CompanyDomain } from "src/company/domain/Company.domain";
 
 export class CompanyRepository implements CompanyRepositoryProtocol {
   prisma: PrismaClient;
@@ -21,6 +21,9 @@ export class CompanyRepository implements CompanyRepositoryProtocol {
           cnpj: company.cnpj,
           creationDate: company.creationDate,
           name: company.name,
+          closingTime: company.closingTime,
+          openingTime: company.openingTime,
+          timeUnit: company.timeUnit
         })
     );
 

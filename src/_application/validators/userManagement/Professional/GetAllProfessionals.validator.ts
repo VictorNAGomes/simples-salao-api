@@ -1,6 +1,6 @@
 import Joi from "joi";
 import { ProfessionalDomain } from "src/userManagement/domain";
-import { CompanyDomain } from "src/userManagement/domain/Company.domain";
+import { CompanyDomain } from "src/company/domain/Company.domain";
 import { cnpjValidator } from "@utils/validators";
 
 export class GetAllProfessionalsValidator {
