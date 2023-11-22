@@ -21,6 +21,7 @@ export class CompanyController {
 
   async getOne(req: Request, res: Response) {
     try {
+      console.log("a")
       const getOneCompanyService = CompanyServiceFactory.createGetOneCompanyService();
       const validator = new GetOneCompanyValidator();
       validator.validate(req.params.idCompany);
@@ -42,8 +43,8 @@ export class CompanyController {
       const updateCompanyService =
         CompanyServiceFactory.createUpdateCompanyService();
 
-      const validator = new UpdateCompanyValidator();
-      validator.validate(req.params.idCompany, req.body);
+      // const validator = new UpdateCompanyValidator();
+      // validator.validate(req.params.idCompany, req.body);
 
       const result = await updateCompanyService.execute(
         req.params.idCompany,

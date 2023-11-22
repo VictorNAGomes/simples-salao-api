@@ -8,7 +8,7 @@ export const CompanyRoutes = (router: ExpressRouter) => {
    * /company:
    *  get:
    *   tags:
-   *    - Service
+   *    - Company
    *   summary: List all Companys
    *   responses:
    *    200:
@@ -18,43 +18,43 @@ export const CompanyRoutes = (router: ExpressRouter) => {
    *       schema:
    *        type: array
    *        items:
-   *          $ref: '#/components/schemas/Service'
+   *          $ref: '#/components/schemas/Company'
    */
   router.get("/company", companyController.getAll);
 
   /**
    * @swagger
-   * /company/{idService}:
+   * /company/{idCompany}:
    *  get:
    *   tags:
-   *    - Service
+   *    - Company
    *   summary: Get one Company
    *   parameters:
    *    - in: path
-   *      name: idService
+   *      name: idCompany
    *      required: true
    *      description: ID of the Company
    *      example: UUID
    *   responses:
    *    200:
-   *     description: Service
+   *     description: Company
    *     content:
    *      application/json:
    *       schema:
-   *        $ref: '#/components/schemas/Service'
+   *        $ref: '#/components/schemas/Company'
    */
-  router.get("/company/:idService", companyController.getOne);
+  router.get("/company/:idCompany", companyController.getOne);
 
   /**
    * @swagger
-   * /company/{idService}:
+   * /company/{idCompany}:
    *  patch:
    *   tags:
-   *    - Service
+   *    - Company
    *   summary: Get one Company
    *   parameters:
    *    - in: path
-   *      name: idService
+   *      name: idCompany
    *      required: true
    *      description: ID of the Company
    *      example: UUID
@@ -63,12 +63,12 @@ export const CompanyRoutes = (router: ExpressRouter) => {
    *    content:
    *     application/json:
    *      schema:
-   *       $ref: '#/components/schemas/ServiceUpdate'
+   *       $ref: '#/components/schemas/CompanyUpdate'
    *   responses:
    *    200:
-   *     description: Service updated
+   *     description: Company updated
    */
-  router.patch("/company/:idService", companyController.update);
+  router.patch("/company/:idCompany", companyController.update);
 
   return router;
 };
