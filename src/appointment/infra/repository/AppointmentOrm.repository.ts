@@ -27,4 +27,15 @@ export class AppointmentOrmRepository implements AppointmentRepository {
 
     return dbResult;
   }
+
+  async getIncome(date: Date): Promise<number> {
+    const value = await this.prisma.appointment.count({
+      where: {
+        date: date,
+        approved: true
+      }
+    })
+
+    return value
+  }
 }
