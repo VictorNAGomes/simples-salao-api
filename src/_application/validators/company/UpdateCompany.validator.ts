@@ -16,10 +16,7 @@ export class UpdateCompanyValidator {
   validate(
 
     idCompany: string,
-    clientData: Omit<
-      Partial<CompanyDomain>,
-      "idCompany"
-    >
+    clientData: Partial<CompanyDomain>
   ) {
     if (Object.keys(clientData).length === 0) {
       ErrorHandler.throwWithoutLog(
