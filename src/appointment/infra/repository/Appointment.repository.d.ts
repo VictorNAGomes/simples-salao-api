@@ -4,4 +4,6 @@ export class AppointmentRepository {
   create(
     appointmentDomain: Omit<AppointmentDomain, "idAppointment">
   ): Promise<AppointmentDomain | null>;
+
+  getAll(): Promise<AppointmentDomain[] | null>;
 }

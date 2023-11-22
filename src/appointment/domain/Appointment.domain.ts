@@ -15,7 +15,7 @@ export class AppointmentDomain {
     Object.assign(this, appointment);
   }
 
-  static create(service: AppointmentDomain): AppointmentDomain {
-    return new AppointmentDomain(service);
+  static create(appointment: AppointmentDomain): AppointmentDomain {
+    return new AppointmentDomain(appointment);
   }
 }

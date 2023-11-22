@@ -23,5 +23,24 @@ export const appointmentRoutes = (router: ExpressRouter) => {
    */
   router.post("/appointment", appointmentController.createAppointment);
 
+  /**
+   * @swagger
+   * /appointment:
+   *  get:
+   *   tags:
+   *   - Appointment
+   *   summary: List appointments
+   *   responses:
+   *    200:
+   *     description: Appointments listed
+   *     content:
+   *      application/json:
+   *       schema:
+   *        $ref: '#/components/schemas/Appointment'
+   *    404:
+   *     description: No appointments found
+   */
+  router.get("/appointment", appointmentController.listAppointments);
+
   return router;
 };

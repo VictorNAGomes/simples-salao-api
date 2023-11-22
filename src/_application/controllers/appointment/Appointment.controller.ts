@@ -2,6 +2,7 @@ import { PrismaSingleton } from "@singletons";
 import { Request, Response } from "express";
 import { CreateAppointmentDto } from "src/_application/dtos/appointments/appointment/CreateAppointment.dto";
 import { CreateAppointmentValidator } from "src/_application/validators/appointment/appointment/CreateAppointment.validator";
+import { AppointmentDomain } from "src/appointment/domain/Appointment.domain";
 import { CreateAppointmentService } from "src/appointment/domain/service/Appointment/CreateAppointment.service";
 import { AppointmentOrmRepository } from "src/appointment/infra/repository/AppointmentOrm.repository";
 import { ServiceOrmRepository } from "src/appointment/infra/repository/ServiceOrm.repository";
@@ -40,5 +41,20 @@ export class AppointmentController {
 
       res.status(500).json({ message: error.message });
     }
+  }
+  async listAppointments(req: Request, res: Response) {
+    res.json({
+      result: [
+        AppointmentDomain.create({
+          idAppointment: "1",
+          idService: "1",
+          idClient: "1",
+          idProfessional: "1",
+          date: new Date(),
+          approved: true,
+          createdByProfessional: true,
+        }),
+      ],
+    });
   }
 }

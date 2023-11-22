@@ -1,36 +1,97 @@
+import { UserRepository } from "src/userManagement/infra/repository/User.repository";
 import { UserDomain } from "../../User.domain";
 import { LoginService } from "./Login.service";
+import { UserRepositoryProtocol } from "src/userManagement/infra/protocol";
+import { CustomError } from "src/_application/CustomError";
 
-const mockUserRepository = {
-  findByEmail: jest.fn(),
+const makeSut = () => {
+  class MockUserRepository implements UserRepositoryProtocol {
+    public findByEmail(email: string): Promise<UserDomain> {
+      throw new Error("Method not implemented.");
+    }
+    save(user: UserDomain): Promise<void> {
+      throw new Error("Method not implemented.");
+    }
+  }
+
+  const mockUserRepository = new MockUserRepository();
+
+  return {
+    sut: new LoginService(mockUserRepository),
+    mockUserRepository,
+  };
 };
 
+let sut: LoginService, mockUserRepository: UserRepositoryProtocol;
+
 describe("LoginService", () => {
-  describe("Ao não encontrar nenhum usuário", () => {
-    it("Deve retornar erro", async () => {
-      try {
-        mockUserRepository.findByEmail.mockReturnValueOnce(null);
-        const loginService = new LoginService(mockUserRepository as any);
-        const result = await loginService.execute("email", "password");
-      } catch (erro: any) {
-        expect(erro).toBeInstanceOf(Error);
-        expect(erro.message).toBe("Error: Email ou senha incorretos");
-      }
+  beforeAll(() => {
+    const { sut: sutLogin, mockUserRepository: mockUserRepo } = makeSut();
+    sut = sutLogin;
+    mockUserRepository = mockUserRepo;
+  });
+  describe("Quando não encontrar nenhum usuário com o email informado", () => {
+    it('Deve retornar mensagem: "E-mail ou senha incorretos"', async () => {
+      // monitorar o mock do user repository, e adulterar o resultado do método findByEmail
+      jest.spyOn(mockUserRepository, "findByEmail").mockReturnValueOnce(null);
+
+      // instanciar o service com o mock do user repository
+      const loginService = new LoginService(mockUserRepository);
+      loginService
+        .execute("email", "senha")
+        .then((message: string | undefined) => {
+          expect(message).toBe("E-mail ou senha incorretos");
+        });
     });
   });
-  describe("Ao informar uma senha incorreta", () => {
-    it("Deve retornar erro", async () => {
-      try {
-        mockUserRepository.findByEmail.mockReturnValueOnce(
-          new UserDomain({ email: "aaa", password: "123", idUser: "asd", name: "aa" })
-        );
+  describe("Quando a senha informada estiver incorreta", () => {
+    it('Deve retornar mensagem: "E-mail ou senha incorretos"', async () => {
+      // monitorar o mock do user repository, e adulterar o resultado do método findByEmail
+      jest.spyOn(mockUserRepository, "findByEmail").mockReturnValueOnce(
+        new Promise((resolve) =>
+          resolve(
+            new UserDomain({
+              email: "email",
+              name: "name",
+              idUser: "uuid",
+              password: "hashpassword",
+            })
+          )
+        )
+      );
 
-        const loginService = new LoginService(mockUserRepository as any);
-        const result = await loginService.execute("email", "wrongpass");
-      } catch (erro: any) {
-        expect(erro).toBeInstanceOf(Error);
-        expect(erro.message).toBe("Error: Email ou senha incorretos");
-      }
+      // instanciar o service com o mock do user repository
+      const loginService = new LoginService(mockUserRepository);
+      loginService
+        .execute("email", "differenthashpassword")
+        .then((message: string | undefined) => {
+          expect(message).toBe("E-mail ou senha incorretos");
+        });
+    });
+  });
+  describe("Quando a senha e e-mail informados estiverem corretos", () => {
+    it('Deve retornar mensagem: "Você foi autenticado com sucesso"', async () => {
+      // monitorar o mock do user repository, e adulterar o resultado do método findByEmail
+      jest.spyOn(mockUserRepository, "findByEmail").mockReturnValueOnce(
+        new Promise((resolve) =>
+          resolve(
+            new UserDomain({
+              email: "email",
+              name: "name",
+              idUser: "uuid",
+              password: "hashpassword",
+            })
+          )
+        )
+      );
+
+      // instanciar o service com o mock do user repository
+      const loginService = new LoginService(mockUserRepository);
+      loginService
+        .execute("email", "hashpassword")
+        .then((message: string | undefined) => {
+          expect(message).toBe("Você foi autenticado com sucesso");
+        });
     });
   });
 });
