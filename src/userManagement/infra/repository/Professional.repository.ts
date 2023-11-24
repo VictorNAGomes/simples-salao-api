@@ -1,6 +1,7 @@
 import { Prisma, PrismaClient } from "@prisma/client";
 import { ProfessionalDomain } from "../../domain/Professional.domain";
 import { ProfessionalRepositoryProtocol } from "../protocol";
+import { CompanyDomain } from "src/company/domain/Company.domain";
 
 export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
   prisma: PrismaClient;
@@ -9,7 +10,7 @@ export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
     this.prisma = prisma;
   }
 
-  public async create(data: {
+  /*   public async create(data: {
     professionalData: Omit<ProfessionalDomain, "idUser" | "idProfessional">;
   }) {
     const insertData: Prisma.ProfessionalCreateInput = {
@@ -165,5 +166,23 @@ export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
     });
 
     return dbResult;
+  } */
+
+  async create({
+    email,
+    password,
+    name,
+  }: Omit<ProfessionalDomain, "idUser" | "idProfessional">): Promise<void> {
+    await this.prisma.professional.create({
+      data: {
+        user: {
+          create: {
+            email,
+            password,
+            name,
+          },
+        },
+      },
+    });
   }
 }

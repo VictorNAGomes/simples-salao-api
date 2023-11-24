@@ -28,8 +28,6 @@ model Client {
 model Professional {
   idProfessional String        @id @default(uuid())
   idUser         String        @unique
-  idCompany      String
-  company        Company       @relation(fields: [idCompany], references: [idCompany])
   user           User          @relation(fields: [idUser], references: [idUser])
   Appointment    Appointment[]
 }
@@ -43,9 +41,6 @@ model Company {
   openingTime  Int
   closingTime  Int
 
-  // CompanyPreferences CompanyPreferences[]
-  // CompanyService CompanyService[]
-  Professionals Professional[]
   Client        Client[]
   Service       Service[]
 }

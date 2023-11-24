@@ -20,23 +20,12 @@ export const professionalRoutes = (router: ExpressRouter) => {
    *           schema:
    *             type: object
    *             example:
-   *               professional:
-   *                 name: John Doe
-   *                 email: 'john@gmail.com'
-   *                 password: '12345678'
-   *               company:
-   *                 name: Tray Corp
-   *                 cnpj: Company
-   *                 creationDate: '2011-10-05T14:48:00.000Z'
+   *               name: John Doe
+   *               email: 'john@gmail.com'
+   *               password: '12345678'
    *     responses:
    *       201:
    *         description: Profissional criado com sucesso
-   *         content:
-   *           application/json:
-   *             schema:
-   *               type: object
-   *               example:
-   *                 message: Conta pessoal e conta de empresa criadas com sucesso
    *       400:
    *         description: Corpo da solicitação inválido
    *       500:

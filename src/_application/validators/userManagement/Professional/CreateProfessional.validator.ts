@@ -5,11 +5,9 @@ import { cnpjValidator } from "@utils/validators";
 
 export class CreateProfessionalValidator {
   private schema = Joi.object({
-    professional: Joi.object<ProfessionalDomain>({
-      name: Joi.string().required(),
-      email: Joi.string().email().required(),
-      password: Joi.string().required().min(8),
-    }),
+    name: Joi.string().required(),
+    email: Joi.string().email().required(),
+    password: Joi.string().required().min(8),
   });
   validate(objToCompare: { email: string; password: string; name: string }) {
     return this.schema.validate(objToCompare, {

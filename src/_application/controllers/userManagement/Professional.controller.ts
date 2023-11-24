@@ -4,10 +4,8 @@ import { GetAllProfessionalsValidator } from "src/_application/validators/userMa
 import { GetOneProfessionalValidator } from "src/_application/validators/userManagement/Professional/GetOneProfessional.validator";
 import { UpdateProfessionalValidator } from "src/_application/validators/userManagement/Professional/UpdateProfessional.validator";
 import { ProfessionalServiceFactory } from "src/_utils/factories/service/ProfessionalService.factory";
-import { ProfessionalDomain } from "src/userManagement/domain";
 import { GetAllProfessionalsService } from "src/userManagement/domain/service/Professional/GetAllProfessionals.service";
 import { GetOneProfessionalService } from "src/userManagement/domain/service/Professional/GetOneProfessional.service";
-import { UpdateProfessionalService } from "src/userManagement/domain/service/Professional/UpdateProfessional.service";
 
 export class ProfessionalController {
   async create(req: Request, res: Response) {
@@ -20,14 +18,14 @@ export class ProfessionalController {
 
       const createProfessionalService =
         ProfessionalServiceFactory.createCreateProfessionalService();
-
+        console.log(req.body)
       const result = await createProfessionalService.execute(req.body);
 
       res.status(201).json({
-        message: "Conta profissional criada com sucesso",
-        result,
+        message: result.message,
       });
     } catch (error: any) {
+      console.log({ error });
       res.status(400).json({ message: error.message });
     }
   }
