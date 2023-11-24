@@ -4,6 +4,7 @@ import { CreateAppointmentDto } from "src/_application/dtos/appointments/appoint
 import { CreateAppointmentValidator } from "src/_application/validators/appointment/appointment/CreateAppointment.validator";
 import { AppointmentDomain } from "src/appointment/domain/Appointment.domain";
 import { CreateAppointmentService } from "src/appointment/domain/service/Appointment/CreateAppointment.service";
+import { GetAllAppointmentsService } from "src/appointment/domain/service/Appointment/GetAllAppointments.service";
 import { AppointmentOrmRepository } from "src/appointment/infra/repository/AppointmentOrm.repository";
 import { ServiceOrmRepository } from "src/appointment/infra/repository/ServiceOrm.repository";
 import { ClientRepository } from "src/userManagement/infra/repository/Client.repository";
@@ -13,6 +14,7 @@ export class AppointmentController {
   async createAppointment(req: Request, res: Response) {
     try {
       const appointmentDto: CreateAppointmentDto = req.body;
+      console.log(appointmentDto)
       CreateAppointmentValidator.validate(appointmentDto);
       const prisma = PrismaSingleton.getPrismaClient();
       const appointmentOrmRepository = new AppointmentOrmRepository(prisma);
@@ -29,6 +31,7 @@ export class AppointmentController {
 
       const result = await createAppointmentService.execute(appointmentDto);
 
+      console.log(result)
       return res.status(201).json(result);
     } catch (error: any) {
       if (error.isValidationError) {
@@ -43,18 +46,16 @@ export class AppointmentController {
     }
   }
   async listAppointments(req: Request, res: Response) {
-    res.json({
-      result: [
-        AppointmentDomain.create({
-          idAppointment: "1",
-          idService: "1",
-          idClient: "1",
-          idProfessional: "1",
-          date: new Date(),
-          approved: true,
-          createdByProfessional: true,
-        }),
-      ],
-    });
+    const prisma = PrismaSingleton.getPrismaClient();
+    const appointmentOrmRepository = new AppointmentOrmRepository(prisma);
+    const getAllAppointmentsService = new GetAllAppointmentsService(
+      appointmentOrmRepository
+    );
+
+    getAllAppointmentsService.execute().then((result) => {
+      return res.status(200).json(result);
+    }).catch((error) => {
+      return res.status(500).json({ message: error.message });
+    })
   }
 }

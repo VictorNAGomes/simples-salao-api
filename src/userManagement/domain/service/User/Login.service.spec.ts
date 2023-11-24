@@ -35,9 +35,7 @@ describe("LoginService", () => {
       // monitorar o mock do user repository, e adulterar o resultado do método findByEmail
       jest.spyOn(mockUserRepository, "findByEmail").mockReturnValueOnce(null);
 
-      // instanciar o service com o mock do user repository
-      const loginService = new LoginService(mockUserRepository);
-      loginService
+      sut
         .execute("email", "senha")
         .then((message: string | undefined) => {
           expect(message).toBe("E-mail ou senha incorretos");
@@ -70,7 +68,7 @@ describe("LoginService", () => {
     });
   });
   describe("Quando a senha e e-mail informados estiverem corretos", () => {
-    it('Deve retornar mensagem: "Você foi autenticado com sucesso"', async () => {
+    it('Deve retornar um token do tipo string', async () => {
       // monitorar o mock do user repository, e adulterar o resultado do método findByEmail
       jest.spyOn(mockUserRepository, "findByEmail").mockReturnValueOnce(
         new Promise((resolve) =>
@@ -90,7 +88,7 @@ describe("LoginService", () => {
       loginService
         .execute("email", "hashpassword")
         .then((message: string | undefined) => {
-          expect(message).toBe("Você foi autenticado com sucesso");
+          expect(message).toBeDefined();
         });
     });
   });

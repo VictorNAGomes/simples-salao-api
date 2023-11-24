@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 
 async function main() {
-  const jon_doe = await prisma.user.create({
+  await prisma.user.create({
     data: {
       email: "john1@email.com",
       name: "John Doe",
@@ -11,14 +11,14 @@ async function main() {
     },
   });
 
-  const company = await prisma.company.create({
+  await prisma.company.create({
     data: {
-      cnpj: "64.087.097/0001-89",
-      name: "Amazon LTDA",
+      closingTime: 7,
+      cnpj: "123456789",
+      creationDate: new Date(),
+      name: "Company 1",
+      openingTime: 20,
       timeUnit: 30,
-      openingTime: 8,
-      closingTime: 18,
-      creationDate: "2011-10-05T14:48:00.000Z"
     },
   });
 }

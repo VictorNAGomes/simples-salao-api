@@ -12,8 +12,9 @@ export class CreateAppointmentService {
     private readonly appointmentRepository: AppointmentRepository // private readonly clientRepository: ClientRepositoryProtocol, // private readonly professionalRepository: ProfessionalRepositoryProtocol, // private readonly serviceRepository: ServiceRepository
   ) {}
   async execute(
-    appointmentData: Omit<AppointmentDomain, "idAppointment" | "">
+    appointmentData: Omit<AppointmentDomain, "idAppointment" | "service">
   ) {
+    console.log(appointmentData)
     try {
       const appointment = await this.appointmentRepository.create(
         appointmentData

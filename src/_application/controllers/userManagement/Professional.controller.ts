@@ -24,7 +24,7 @@ export class ProfessionalController {
       const result = await createProfessionalService.execute(req.body);
 
       res.status(201).json({
-        message: "Conta pessoal e conta de empresa criadas com sucesso",
+        message: "Conta profissional criada com sucesso",
         result,
       });
     } catch (error: any) {

@@ -10,6 +10,7 @@ export class AppointmentDomain {
   date!: Date;
   approved!: boolean;
   createdByProfessional!: boolean;
+  service!: ServiceDomain;
 
   constructor(appointment: AppointmentDomain) {
     Object.assign(this, appointment);

@@ -30,6 +30,7 @@ export class ServiceController {
 
       return res.status(201).json({ result, message });
     } catch (error: any) {
+      console.log(error)
       return res.status(400).json({ message: error.message });
     }
   }

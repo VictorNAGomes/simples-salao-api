@@ -13,11 +13,6 @@ export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
     professionalData: Omit<ProfessionalDomain, "idUser" | "idProfessional">;
   }) {
     const insertData: Prisma.ProfessionalCreateInput = {
-      company: {
-        connect: {
-          idCompany: data.professionalData.idCompany,
-        }
-      },
       user: {
         create: {
           email: data.professionalData.email,
@@ -31,7 +26,6 @@ export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
       data: insertData,
       include: {
         user: true,
-        company: true,
       },
     });
 
@@ -43,7 +37,6 @@ export class ProfessionalRepository implements ProfessionalRepositoryProtocol {
       name: dbResult.user.name,
       password: dbResult.user.password,
       idUser: dbResult.user.idUser,
-      idCompany: dbResult.company.idCompany,
     });
 
     return {
